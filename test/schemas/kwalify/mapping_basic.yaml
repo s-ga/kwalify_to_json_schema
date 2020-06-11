@@ -1,0 +1,28 @@
+type: map
+mapping:
+  str:
+    type: str
+  int:
+    type: int
+  float:
+    type: float
+  number:
+    type: number
+  text:
+    type: text
+  bool:
+    type: bool
+  date:
+    type: date
+  time:
+    type: time
+  timestamp:
+    type: timestamp
+  seq:
+    type: seq
+  map:
+    type: map
+  scalar:
+    type: scalar
+  any:
+    type: any
