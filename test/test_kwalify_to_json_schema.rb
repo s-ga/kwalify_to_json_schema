@@ -11,55 +11,34 @@ module KwalifyToJsonSchema
     Dir.glob(File.join(__dir__, "schemas", "kwalify", "*.yaml")).each { |source|
       test_name_base = File.basename(source, File.extname(source))
 
-      # Define a method for the test JSON output
-      define_method("test_#{test_name_base}_json_output".to_sym) {
-        ser = KwalifyToJsonSchema::Serialization::Json
-        output_file = test_name_base + ".json"
-        dest = File.join(@@tmpdir, output_file)
-        expected = File.join(File.join(__dir__, "schemas", "json_schema", "json", output_file))
+      %w(json yaml).map { |expected_type|
 
-        skip "Expected JSON result does not exist for test #{test_name_base}. The #{expected} file is missing" unless File.exist?(expected)
+        # Define a method for the test JSON output
+        define_method("test_#{test_name_base}_#{expected_type}_output".to_sym) {
+          output_file = test_name_base + ".#{expected_type}"
+          expected = File.join(File.join(__dir__, "schemas", "json_schema", expected_type, output_file))
 
-        # Convert
-        KwalifyToJsonSchema.convert_file(source, dest)
+          skip "Expected #{expected_type.upcase} result does not exist for test #{test_name_base}. The #{expected} file is missing" unless File.exist?(expected)
 
-        # Validate schema
-        validate_json_schema_file(dest)
+          ser = KwalifyToJsonSchema::Serialization::serialization_for_type(expected_type)
+          dest = File.join(@@tmpdir, output_file)
 
-        if @@debug
-          puts test_name_base
-          puts ser.normalize(File.read(dest))
-        end
-        # Compare to expected result
-        assert_equal(
-          ser.normalize(File.read(expected)),
-          ser.normalize(File.read(dest))
-        )
-      }
+          # Convert
+          KwalifyToJsonSchema.convert_file(source, dest)
 
-      # Define a method for the test YAML output
-      define_method("test_#{test_name_base}_yaml_output".to_sym) {
-        ser = KwalifyToJsonSchema::Serialization::Yaml
-        output_file = test_name_base + ".yaml"
-        dest = File.join(@@tmpdir, output_file)
-        expected = File.join(File.join(__dir__, "schemas", "json_schema", "yaml", output_file))
+          # Validate schema
+          validate_json_schema_file(dest)
 
-        skip "Expected YAML result does not exist for test #{test_name_base}. The #{expected} file is missing" unless File.exist?(expected)
-
-        # Convert
-        KwalifyToJsonSchema.convert_file(source, dest)
-        # Validate schema
-        validate_json_schema_file(dest)
-
-        if @@debug
-          puts test_name_base
-          puts ser.normalize(File.read(dest))
-        end
-        # Compare to expected result
-        assert_equal(
-          ser.normalize(File.read(expected)),
-          ser.normalize(File.read(dest))
-        )
+          if @@debug
+            puts test_name_base
+            puts ser.normalize(File.read(dest))
+          end
+          # Compare to expected result
+          assert_equal(
+            ser.normalize(File.read(expected)),
+            ser.normalize(File.read(dest))
+          )
+        }
       }
     }
 
