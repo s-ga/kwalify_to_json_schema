@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name = "kwalify-to-json-schema"
   s.version = "0.0.0"
   s.date = "2020-06-10"
-  s.summary = "Kwalify schemas to JSON schemas"
+  s.summary = "Kwalify schemas to JSON schemas conversion"
   s.description = "Allows to convert & Kwalify schemas to a JSON Schema Draft 7"
   s.authors = ["Sylvain Gamot"]
   s.email = ""
