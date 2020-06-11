@@ -128,8 +128,16 @@ module KwalifyToJsonSchema
         target["pattern"] = pa.sub(/^\//, "").sub(/\/$/, "")
       end
 
-      # TODO implement 'length'
-      new_issue "'length' is not implemented" if kelem["length"]
+      if length = kelem["length"]
+        case ktype
+        when "str", "text"
+          target["minLength"] = length["min"] if length["min"]
+          target["maxLength"] = length["max"] if length["max"]
+          target["minLength"] = length["min-ex"] + 1 if length["min-ex"]
+          target["maxLength"] = length["max-ex"] + -1 if length["max-ex"]
+        end
+      end
+
       new_issue "'unique' is not supported by JSON Schema" if kelem["unique"]
 
       target

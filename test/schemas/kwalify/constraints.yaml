@@ -22,3 +22,14 @@ mapping:
     range:
       min-ex: 0
       max-ex: 9
+
+  str_length:
+    type: str
+    length:
+      min: 4
+      max: 8
+  str_length_ex:
+    type: str
+    length:
+      min-ex: 4
+      max-ex: 8

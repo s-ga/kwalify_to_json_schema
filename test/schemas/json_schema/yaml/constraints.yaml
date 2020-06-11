@@ -17,9 +17,20 @@ properties:
     type: number
     minimum: 0
     maximum: 9
+
   number_range_ex:
     type: number
     minimum: 0
     exclusiveMinimum: true
     maximum: 9
     exclusiveMaximum: true
+
+  str_length:
+    type: string
+    minLength: 4
+    maxLength: 8
+
+  str_length_ex:
+    type: string
+    minLength: 5
+    maxLength: 7
