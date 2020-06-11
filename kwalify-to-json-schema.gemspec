@@ -11,7 +11,9 @@ Gem::Specification.new do |s|
   s.homepage =
     "https://rubygems.org/gems/kwalify-to-json-schema"
   s.license = "MIT"
-  s.add_runtime_dependency "json-schema", "~>3.0"
+
+  s.add_runtime_dependency "thor", "~>1.0"
+  s.add_development_dependency "json-schema", "~>2.0"
 
   # Run tests
   require_relative "test/test_kwalify_to_json_schema"
