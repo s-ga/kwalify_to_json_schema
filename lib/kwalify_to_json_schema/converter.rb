@@ -3,6 +3,7 @@ module KwalifyToJsonSchema
     SCHEMA = "http://json-schema.org/draft-07/schema#"
 
     attr_reader :options
+    attr_reader :issues
 
     def initialize(options = {})
       @options = options
@@ -10,7 +11,13 @@ module KwalifyToJsonSchema
     end
 
     def exec(kwalify_schema)
-      process(root, kwalify_schema)
+      schema = process(root, kwalify_schema)
+      if issues.any? && issues_to_description?
+        description = schema["description"] ||= ""
+        description << "Issues when converting from Kwalify:\n"
+        description << issues.map { |issue| "* #{issue}" }.join("\n")
+      end
+      schema
     end
 
     private
@@ -82,13 +89,13 @@ module KwalifyToJsonSchema
         target["type"] = "boolean"
       when "date"
         # TODO
-        new_issue "'date' type is not supported by JSON Schema" if kelem["unique"]
+        new_issue "'date' type is not supported by JSON Schema"
       when "time"
         # TODO
-        new_issue "'time' type is not supported by JSON Schema" if kelem["unique"]
+        new_issue "'time' type is not supported by JSON Schema"
       when "timestamp"
         # TODO
-        new_issue "'timestamp' type is not supported by JSON Schema" if kelem["unique"]
+        new_issue "'timestamp' type is not supported by JSON Schema"
       when "scalar"
         # Use one of
         target["oneOf"] = [
@@ -135,5 +142,6 @@ module KwalifyToJsonSchema
     def id; options[:id] end
     def title; options[:title] end
     def description; options[:description] end
+    def issues_to_description?; options[:issues_to_description] == true end
   end
 end

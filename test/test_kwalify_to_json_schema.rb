@@ -9,14 +9,15 @@ module KwalifyToJsonSchema
 
     # Create a test method for every Kwalify schema
     Dir.glob(File.join(__dir__, "schemas", "kwalify", "*.yaml")).each { |source|
-      test_name_base = File.basename(source, File.extname(source))
+      test_file_base = File.basename(source, File.extname(source))
+      test_name_base = test_file_base.gsub("#", "_")
       expected_types = %w(json yaml)
 
       # Define a method for the test JSON output
       define_method("test_#{test_name_base}_output".to_sym) {
         types_done = 0
         expected_types.map { |expected_type|
-          output_file = test_name_base + ".#{expected_type}"
+          output_file = test_file_base + ".#{expected_type}"
           expected = File.join(File.join(__dir__, "schemas", "json_schema", expected_type, output_file))
 
           next unless File.exist?(expected)
@@ -24,9 +25,13 @@ module KwalifyToJsonSchema
 
           ser = KwalifyToJsonSchema::Serialization::serialization_for_type(expected_type)
           dest = File.join(@@tmpdir, output_file)
+          options = {
+            # Add issues to description if filename include "#issues_to_description"
+            issues_to_description: output_file.include?("#issues_to_description"),
+          }
 
           # Convert
-          KwalifyToJsonSchema.convert_file(source, dest)
+          KwalifyToJsonSchema.convert_file(source, dest, options)
 
           # Validate schema
           validate_json_schema_file(dest)

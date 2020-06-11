@@ -1,0 +1,13 @@
+"$schema": http://json-schema.org/draft-07/schema#
+description: |-
+  Test unsupported types.
+  Issues when converting from Kwalify:
+  * 'date' type is not supported by JSON Schema
+  * 'time' type is not supported by JSON Schema
+  * 'timestamp' type is not supported by JSON Schema
+type: object
+additionalProperties: false
+properties:
+  date: {}
+  time: {}
+  timestamp: {}

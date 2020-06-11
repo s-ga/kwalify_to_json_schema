@@ -1,0 +1,10 @@
+type: map
+desc: |
+  Test unsupported types.
+mapping:
+  date:
+    type: date
+  time:
+    type: time
+  timestamp:
+    type: timestamp
