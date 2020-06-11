@@ -1,2 +1,4 @@
 #!/usr/bin/ruby
 require "kwalify_to_json_schema"
+
+KwalifyToJsonSchema::Cli.start

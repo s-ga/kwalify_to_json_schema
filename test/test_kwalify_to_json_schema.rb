@@ -25,13 +25,14 @@ module KwalifyToJsonSchema
 
           ser = KwalifyToJsonSchema::Serialization::serialization_for_format(expected_format)
           dest = File.join(@@tmpdir, output_file)
-          options = {
-            # Add issues to description if filename include "#issues_to_description"
-            issues_to_description: output_file.include?("#issues_to_description"),
-          }
+
+          args = ["convert", source, dest]
+          # Add issues to description if filename include "#issues_to_description"
+          args << "--issues_to_description" if output_file.include?("#issues_to_description")
 
           # Convert
-          KwalifyToJsonSchema.convert_file(source, dest, options)
+          # KwalifyToJsonSchema.convert_file(source, dest, options)
+          KwalifyToJsonSchema::Cli.start(args)
 
           # Validate schema
           validate_json_schema_file(dest)
