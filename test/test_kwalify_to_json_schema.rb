@@ -1,4 +1,5 @@
 require "minitest/autorun"
+require "json-schema"
 require_relative "../lib/kwalify_to_json_schema"
 
 module KwalifyToJsonSchema
@@ -12,54 +13,65 @@ module KwalifyToJsonSchema
 
       # Define a method for the test JSON output
       define_method("test_#{test_name_base}_json_output".to_sym) {
-        json_output_file = test_name_base + ".json"
-        json_dest = File.join(@@tmpdir, json_output_file)
-        json_expected = File.join(File.join(__dir__, "schemas", "json_schema", "json", json_output_file))
+        ser = KwalifyToJsonSchema::Serialization::Json
+        output_file = test_name_base + ".json"
+        dest = File.join(@@tmpdir, output_file)
+        expected = File.join(File.join(__dir__, "schemas", "json_schema", "json", output_file))
 
-        skip "Expected JSON result does not exist for test #{test_name_base}. The #{json_expected} file is missing" unless File.exist?(json_expected)
+        skip "Expected JSON result does not exist for test #{test_name_base}. The #{expected} file is missing" unless File.exist?(expected)
 
         # Convert
-        KwalifyToJsonSchema.convert_file(source, json_dest)
+        KwalifyToJsonSchema.convert_file(source, dest)
+
+        # Validate schema
+        validate_json_schema_file(dest)
 
         if @@debug
-          puts Test::normalize_json(File.read(json_dest))
+          puts test_name_base
+          puts ser.normalize(File.read(dest))
         end
         # Compare to expected result
         assert_equal(
-          Test::normalize_json(File.read(json_expected)),
-          Test::normalize_json(File.read(json_dest))
+          ser.normalize(File.read(expected)),
+          ser.normalize(File.read(dest))
         )
       }
 
       # Define a method for the test YAML output
       define_method("test_#{test_name_base}_yaml_output".to_sym) {
-        yaml_output_file = test_name_base + ".yaml"
-        yaml_dest = File.join(@@tmpdir, yaml_output_file)
-        yaml_expected = File.join(File.join(__dir__, "schemas", "json_schema", "yaml", yaml_output_file))
+        ser = KwalifyToJsonSchema::Serialization::Yaml
+        output_file = test_name_base + ".yaml"
+        dest = File.join(@@tmpdir, output_file)
+        expected = File.join(File.join(__dir__, "schemas", "json_schema", "yaml", output_file))
 
-        skip "Expected YAML result does not exist for test #{test_name_base}. The #{yaml_expected} file is missing" unless File.exist?(yaml_expected)
+        skip "Expected YAML result does not exist for test #{test_name_base}. The #{expected} file is missing" unless File.exist?(expected)
 
         # Convert
-        KwalifyToJsonSchema.convert_file(source, yaml_dest)
+        KwalifyToJsonSchema.convert_file(source, dest)
+        # Validate schema
+        validate_json_schema_file(dest)
 
         if @@debug
           puts test_name_base
-          puts Test::normalize_yaml(File.read(yaml_dest))
+          puts ser.normalize(File.read(dest))
         end
         # Compare to expected result
         assert_equal(
-          Test::normalize_yaml(File.read(yaml_expected)),
-          Test::normalize_yaml(File.read(yaml_dest))
+          ser.normalize(File.read(expected)),
+          ser.normalize(File.read(dest))
         )
       }
     }
 
-    def self.normalize_json(json)
-      JSON.pretty_generate(JSON.parse(json))
+    def validate_json_schema_file(schema_file)
+      schema = KwalifyToJsonSchema::Serialization::deserialize_from_file(schema_file)
+      validate_json_schema(schema)
     end
 
-    def self.normalize_yaml(yaml)
-      YAML.dump(YAML.load yaml)
+    def validate_json_schema(schema)
+      # FIXME draft7 is not available in current json-schema gem
+      metaschema = JSON::Validator.validator_for_name("draft4").metaschema
+      JSON::Validator.validate!(metaschema, schema)
     end
   end
 end

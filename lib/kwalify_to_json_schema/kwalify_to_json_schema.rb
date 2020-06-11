@@ -7,18 +7,10 @@ module KwalifyToJsonSchema
   # @peram source Path to Kwalify YAML schema
   # @param dest Path to resulting JSON schema
   def self.convert_file(source, dest, options = {})
-    # Select a serializer: JSON or YAML
-    json_serializer = { mod: JSON, method: :pretty_generate }
-    serializer = {
-      ".json" => json_serializer,
-      ".yaml" => { mod: YAML, method: :dump },
-    }[File.extname(dest)] || json_serializer
-
     # Convert
-    converted = convert_object(YAML.load(File.read(source)), options)
-
+    converted = convert_object(Serialization.deserialize_from_file(source), options)
     # Serialize
-    File.write(dest, serializer[:mod].send(serializer[:method], converted))
+    Serialization.serialize_to_file(dest, converted)
   end
 
   def self.convert_object(kwalify_schema, options = {})

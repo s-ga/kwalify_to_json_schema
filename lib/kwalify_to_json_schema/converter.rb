@@ -107,8 +107,14 @@ module KwalifyToJsonSchema
       if range = kelem["range"]
         target["minimum"] = range["min"] if range["min"]
         target["maximum"] = range["max"] if range["max"]
-        target["exclusiveMinimum"] = range["min-ex"] if range["min-ex"]
-        target["exclusiveMaximum"] = range["max-ex"] if range["max-ex"]
+        if range["min-ex"]
+          target["minimum"] = range["min-ex"]
+          target["exclusiveMinimum"] = true
+        end
+        if range["max-ex"]
+          target["maximum"] = range["max-ex"]
+          target["exclusiveMaximum"] = true
+        end
       end
       if pa = kelem["pattern"]
         # Remove leading and trailing slash

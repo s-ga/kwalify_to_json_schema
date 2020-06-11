@@ -19,5 +19,7 @@ properties:
     maximum: 9
   number_range_ex:
     type: number
-    exclusiveMinimum: 0
-    exclusiveMaximum: 9
+    minimum: 0
+    exclusiveMinimum: true
+    maximum: 9
+    exclusiveMaximum: true
