@@ -1,4 +1,5 @@
 type: map
+desc: Test a mapping with all types
 mapping:
   str:
     type: str

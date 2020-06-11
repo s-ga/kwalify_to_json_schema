@@ -42,16 +42,23 @@ module KwalifyToJsonSchema
     # @param target Json schema target
     # @param kelem Kwalify element
     def process(target, kelem)
+
+      # Add description if available
+      target["description"] = kelem["desc"] if kelem["desc"]
+
       case ktype = kelem["type"]
       when "map"
         target["type"] = "object"
         target["additionalProperties"] = false
         mapping = kelem["mapping"]
+        required = []
         if mapping.is_a? Hash
           properties = target["properties"] = {}
           mapping.each_pair { |name, e|
             process(properties[name] = {}, e)
+            required << name if e["required"] == true
           }
+          target["required"] = required unless required.empty?
         end
       when "seq"
         target["type"] = "array"
@@ -66,14 +73,22 @@ module KwalifyToJsonSchema
       when "float", "number"
         target["type"] = "number"
       when "text"
+        # Use one of
+        target["oneOf"] = [
+          { "type" => "string" },
+          { "type" => "number" },
+        ]
       when "bool"
         target["type"] = "boolean"
       when "date"
         # TODO
+        new_issue "'date' type is not supported by JSON Schema" if kelem["unique"]
       when "time"
         # TODO
+        new_issue "'time' type is not supported by JSON Schema" if kelem["unique"]
       when "timestamp"
         # TODO
+        new_issue "'timestamp' type is not supported by JSON Schema" if kelem["unique"]
       when "scalar"
         # Use one of
         target["oneOf"] = [
@@ -89,10 +104,20 @@ module KwalifyToJsonSchema
       end
 
       target["enum"] = kelem["enum"] if kelem["enum"]
-      target["pattern"] = kelem["pattern"] if kelem["pattern"]
+      if range = kelem["range"]
+        target["minimum"] = range["min"] if range["min"]
+        target["maximum"] = range["max"] if range["max"]
+        target["exclusiveMinimum"] = range["min-ex"] if range["min-ex"]
+        target["exclusiveMaximum"] = range["max-ex"] if range["max-ex"]
+      end
+      if pa = kelem["pattern"]
+        # Remove leading and trailing slash
+        target["pattern"] = pa.sub(/^\//, "").sub(/\/$/, "")
+      end
 
-      # Add description if available
-      target["description"] = kelem["desc"] if kelem["desc"]
+      # TODO implement 'length'
+      new_issue "'length' is not implemented" if kelem["length"]
+      new_issue "'unique' is not supported by JSON Schema" if kelem["unique"]
 
       target
     end

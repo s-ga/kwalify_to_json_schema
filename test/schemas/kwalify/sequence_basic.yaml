@@ -1,3 +1,4 @@
-type:   seq
+type: seq
+desc: Test a basic sequence
 sequence:
-  - type:   str
+  - type: str
