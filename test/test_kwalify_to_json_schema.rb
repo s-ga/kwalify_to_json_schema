@@ -11,19 +11,19 @@ module KwalifyToJsonSchema
     Dir.glob(File.join(__dir__, "schemas", "kwalify", "*.yaml")).each { |source|
       test_file_base = File.basename(source, File.extname(source))
       test_name_base = test_file_base.gsub("#", "_")
-      expected_types = %w(json yaml)
+      expected_formats = %w(json yaml)
 
       # Define a method for the test JSON output
       define_method("test_#{test_name_base}_output".to_sym) {
-        types_done = 0
-        expected_types.map { |expected_type|
-          output_file = test_file_base + ".#{expected_type}"
-          expected = File.join(File.join(__dir__, "schemas", "json_schema", expected_type, output_file))
+        formats_done = 0
+        expected_formats.map { |expected_format|
+          output_file = test_file_base + ".#{expected_format}"
+          expected = File.join(File.join(__dir__, "schemas", "json_schema", expected_format, output_file))
 
           next unless File.exist?(expected)
-          types_done += 1
+          formats_done += 1
 
-          ser = KwalifyToJsonSchema::Serialization::serialization_for_type(expected_type)
+          ser = KwalifyToJsonSchema::Serialization::serialization_for_format(expected_format)
           dest = File.join(@@tmpdir, output_file)
           options = {
             # Add issues to description if filename include "#issues_to_description"
@@ -47,7 +47,7 @@ module KwalifyToJsonSchema
           )
         }
 
-        skip "None of the expected #{expected_types.join(", ")} result for test #{test_name_base} was found" if types_done == 0
+        skip "None of the expected #{expected_formats.join(", ")} result for test #{test_name_base} was found" if formats_done == 0
       }
     }
 

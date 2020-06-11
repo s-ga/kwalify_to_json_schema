@@ -12,12 +12,12 @@ module KwalifyToJsonSchema
 
     # @return a Hash giving serialization/deserialization module and methods for a given file extension (.json/.yaml)
     def self.serialization_for_file(file)
-      serialization_for_type(File.extname(file)[1..-1])
+      serialization_for_format(File.extname(file)[1..-1])
     end
 
-    # @return a Hash giving serialization/deserialization module and methods for a type (json/yaml)
-    def self.serialization_for_type(type)
-      serializer = { "json" => Json, "yaml" => Yaml }[type] || Json
+    # @return a Hash giving serialization/deserialization module and methods for a format (json/yaml)
+    def self.serialization_for_format(format)
+      serializer = { "json" => Json, "yaml" => Yaml }[format] || Json
     end
 
     class Language
