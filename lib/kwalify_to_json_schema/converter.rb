@@ -31,21 +31,6 @@ module KwalifyToJsonSchema
       }.reject { |k, v| v.nil? }
     end
 
-    # Types:
-    # str
-    # int
-    # float
-    # number (== int or float)
-    # text (== str or number)
-    # bool
-    # date
-    # time
-    # timestamp
-    # seq
-    # map
-    # scalar (all but seq and map)
-    # any (means any data)
-
     # @param target Json schema target
     # @param kelem Kwalify element
     def process(target, kelem)
