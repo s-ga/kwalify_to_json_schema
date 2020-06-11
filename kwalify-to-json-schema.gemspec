@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.authors = ["Sylvain Gamot"]
   s.email = ""
   s.files = Dir.glob(File.join(__dir__, "**/*.rb"))
-
-  s.homepage =
-    "https://rubygems.org/gems/kwalify-to-json-schema"
+  s.bindir = "bin"
+  s.executables << "kwalify_to_json_schema"
+  s.homepage = "https://rubygems.org/gems/kwalify-to-json-schema"
   s.license = "MIT"
 
   s.add_runtime_dependency "thor", "~>1.0"
