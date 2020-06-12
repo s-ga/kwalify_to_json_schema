@@ -2,6 +2,12 @@ module KwalifyToJsonSchema
   class Converter
     SCHEMA = "http://json-schema.org/draft-07/schema#"
 
+    module Limitations
+      DATE_TYPE_NOT_IMPLEMENTED = "Kwalify 'date' type is not supported and will be ignored"
+      TIME_TYPE_NOT_IMPLEMENTED = "Kwalify 'time' type is not supported and will be ignored"
+      TIMESTAMP_TYPE_NOT_IMPLEMENTED = "Kwalify 'timestamp' type is not supported and will be ignored"
+    end
+
     attr_reader :options
     attr_reader :issues
 
@@ -77,13 +83,13 @@ module KwalifyToJsonSchema
         target["type"] = "boolean"
       when "date"
         # TODO
-        new_issue "'date' type is not supported by JSON Schema"
+        new_issue DATE_TYPE_NOT_IMPLEMENTED
       when "time"
         # TODO
-        new_issue "'time' type is not supported by JSON Schema"
+        new_issue TIME_TYPE_NOT_IMPLEMENTED
       when "timestamp"
         # TODO
-        new_issue "'timestamp' type is not supported by JSON Schema"
+        new_issue TIMESTAMP_TYPE_NOT_IMPLEMENTED
       when "scalar"
         # Use one of
         target["oneOf"] = [
