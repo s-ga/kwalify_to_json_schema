@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.license = "MIT"
 
   s.add_runtime_dependency "thor", "~>1.0"
+  s.add_runtime_dependency "coderay", "~>1.0"
   s.add_development_dependency "json-schema", "~>2.0"
 
   # Run tests

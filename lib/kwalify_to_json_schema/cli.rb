@@ -1,7 +1,27 @@
 module KwalifyToJsonSchema
   class Cli < Thor
-
     ###############################################################################################################
+    CUSTOM_PROCESSING_CODE_DOC = <<~CODE
+      class CustomProcessing
+          # The method will be called before conversion allowing to customize the input Kwalify schema.
+          # The implementation have to return the modified schema.
+          # The default implemention don't modify the schema.
+          # @param kwalify_schema {Hash}
+          # @return modified schema
+          def preprocess(kwalify_schema)
+            # TODO return modified schema
+          end
+          
+          # The method will be called after the conversion allowing to customize the output JSON schema.
+          # The implementation have to return the modified schema.
+          # The default implemention don't modify the schema.
+          # @param json_schema {Hash}
+          # @return modified schema
+          def postprocess(json_schema)
+            # TODO return modified schema
+          end
+      end
+    CODE
 
     desc "convert KWALIFY_SCHEMA_FILE, RESULT_FILE",
          "Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml"
@@ -9,9 +29,18 @@ module KwalifyToJsonSchema
            :type => :boolean,
            :default => false,
            :desc => "Will append any conversion issue to the schema description"
+    option :custom_processing,
+           :type => :string,
+           :desc => <<~DESC
+             Allows to provide a pre/post processing file on handled schemas.
+             The given Ruby file have to provide the following class:
+             #{CodeRay.scan(CUSTOM_PROCESSING_CODE_DOC, :ruby).encode :terminal}
+           DESC
+
     def convert(kwalify_schema_file, result_file)
       opts = {
         issues_to_description: options[:issues_to_description],
+        custom_processing: custom_processing(options),
       }
       KwalifyToJsonSchema.convert_file(kwalify_schema_file, result_file, opts)
     end
@@ -32,11 +61,21 @@ module KwalifyToJsonSchema
     option :recursive,
            :type => :boolean,
            :default => false,
-           :desc => "Process files recursively"
+           :desc => "Process files recursively",
+           :long_desc => ""
+    option :custom_processing,
+           :type => :string,
+           :desc => <<~DESC
+             Allows to provide a pre/post processing file on handled schemas.
+             The given Ruby file have to provide the following class:
+             #{CodeRay.scan(CUSTOM_PROCESSING_CODE_DOC, :ruby).encode :terminal}
+           DESC
 
     def convert_dir(kwalify_schema_dir, result_dir)
       opts = {
         issues_to_description: options[:issues_to_description],
+        custom_processing: custom_processing(options),
+
       }
 
       path = [kwalify_schema_dir, options["recursive"] ? "**" : nil, "*.yaml"].compact
@@ -48,6 +87,23 @@ module KwalifyToJsonSchema
 
     def self.exit_on_failure?
       false
+    end
+
+    private
+
+    def custom_processing(options)
+      pf = options[:custom_processing]
+      custom_processing = nil
+      if pf
+        require File.expand_path(pf)
+        begin
+          processing_class = Object.const_get :CustomProcessing
+          custom_processing = processing_class.new
+        rescue NameError => e
+          raise "The 'CustomProcessing' module must be defined in #{pf}"
+        end
+      end
+      custom_processing
     end
   end
 end

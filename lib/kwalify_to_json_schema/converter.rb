@@ -11,13 +11,16 @@ module KwalifyToJsonSchema
     end
 
     def exec(kwalify_schema)
-      schema = process(root, kwalify_schema)
+      kwalify_schema = preprocess(kwalify_schema.dup)
+
+      json_schema = process(root, kwalify_schema)
       if issues.any? && issues_to_description?
-        description = schema["description"] ||= ""
+        description = json_schema["description"] ||= ""
         description << "Issues when converting from Kwalify:\n"
         description << issues.map { |issue| "* #{issue}" }.join("\n")
       end
-      schema
+
+      postprocess(json_schema)
     end
 
     private
@@ -128,6 +131,18 @@ module KwalifyToJsonSchema
       target
     end
 
+    def preprocess(kwalify_schema)
+      ep = custom_processing
+      return kwalify_schema unless ep.respond_to? :preprocess
+      kwalify_schema = ep.preprocess(kwalify_schema.dup)
+    end
+
+    def postprocess(json_schema)
+      ep = custom_processing
+      return json_schema unless ep.respond_to? :postprocess
+      ep.postprocess(json_schema)
+    end
+
     def new_issue(description)
       @issues << description
     end
@@ -136,5 +151,25 @@ module KwalifyToJsonSchema
     def title; options[:title] end
     def description; options[:description] end
     def issues_to_description?; options[:issues_to_description] == true end
+
+    # Give an external procressing object given by options
+    # See {CustomProcessing}.
+    # @return a processing object, a default one if none was specified in options.
+    def custom_processing
+      options[:custom_processing] || CustomProcessing.new
+    end
+  end
+
+  #
+  class CustomProcessing
+    # The method will be called before conversion allowing to customize the input Kwalify schema.
+    # The implementation have to return the modified schema.
+    # The default implemention don't modify the schema.
+    def preproces(kwalify_schema); kwalify_schema; end
+
+    # The method will be called after the conversion allowing to customize the output JSON schema.
+    # The implementation have to return the modified schema.
+    # The default implemention don't modify the schema.
+    def postprocess(json_schema); json_schema; end
   end
 end
