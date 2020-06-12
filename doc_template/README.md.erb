@@ -5,7 +5,7 @@ Kwalify schemas to JSON schemas conversion
 
 This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to a JSON schemas Draft 7
 
-## Limitation
+## Limitations
 
 The current implementation has the following limitation:
 
