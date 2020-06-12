@@ -15,7 +15,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "thor", "~>1.0"
   s.add_runtime_dependency "coderay", "~>1.0"
   s.add_development_dependency "json-schema", "~>2.0"
-
-  # Run tests
-  require_relative "test/test_kwalify_to_json_schema"
+  s.add_development_dependency "rake", "~> 12.3.0"
 end
