@@ -60,7 +60,7 @@ module Options
     state = :init
     count = 0
 
-    options_start = "Options:"
+    options_start = "Converter options:"
     options_stop = "--"
 
     File.read(file).each_line { |line|

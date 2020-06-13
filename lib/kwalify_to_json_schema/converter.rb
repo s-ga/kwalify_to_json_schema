@@ -18,7 +18,7 @@ module KwalifyToJsonSchema
     # Give the list of issues encontered while converting as array of strings.
     attr_reader :issues
 
-    # Options:
+    # Converter options:
     # | Name                  | Type   | Default value| Description                                         |
     # |-----------------------|--------|--------------|-----------------------------------------------------|
     # | :id                   | String | nil          | The JSON schema identifier                          |

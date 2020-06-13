@@ -1,7 +1,7 @@
 module KwalifyToJsonSchema
   # The possible options for the conversion and the associated accessors
   class Options
-    # Options:
+    # Converter options:
     # | Name                  | Type   | Default value| Description                                         |
     # |-----------------------|--------|--------------|-----------------------------------------------------|
     # | :id                   | String | nil          | The JSON schema identifier                          |

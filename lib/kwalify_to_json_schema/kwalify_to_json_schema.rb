@@ -4,7 +4,7 @@ module KwalifyToJsonSchema
   # The destination file can be JSON or YAML.
   # The file extension is used to select the format: .json or .yaml.
   # Other extension will fallback to JSON.
-  # Options:
+  # Converter options:
   # | Name                  | Type   | Default value| Description                                         |
   # |-----------------------|--------|--------------|-----------------------------------------------------|
   # | :id                   | String | nil          | The JSON schema identifier                          |
@@ -24,6 +24,22 @@ module KwalifyToJsonSchema
     Serialization.serialize_to_file(dest, converted)
   end
 
+  # Convert a Kwalify schema string to JSON .schema.
+  # The source and destination strings can be JSON or YAML.
+  # Other extension will fallback to JSON.
+  # Converter options:
+  # | Name                  | Type   | Default value| Description                                         |
+  # |-----------------------|--------|--------------|-----------------------------------------------------|
+  # | :id                   | String | nil          | The JSON schema identifier                          |
+  # | :title                | String | nil          | The JSON schema title                               |
+  # | :description          | String | nil          | The JSON schema description                         |
+  # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
+  # | :custom_processing    | Object | nil          | To customize the conversion                         |
+  # --
+  # @param kwalify_schema Kwalify schema as YAML or JSON
+  # @param source_format format of the source schema
+  # @param dest_format format of the destination schema
+  # @param options
   def self.convert_string(kwalify_schema, source_format = "yaml", dest_format = "json", options = {})
     # Get a converter
     converter = Converter.new(options)
