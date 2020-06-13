@@ -1,5 +1,5 @@
 module KwalifyToJsonSchema
-  # Enumeration of known implementation limitation
+  # Enumeration of known implementation limitations
   module Limitations
     DATE_TYPE_NOT_IMPLEMENTED = "Kwalify 'date' type is not supported and is ignored"
     TIME_TYPE_NOT_IMPLEMENTED = "Kwalify 'time' type is not supported and is ignored"
