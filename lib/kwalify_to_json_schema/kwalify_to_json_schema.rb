@@ -13,7 +13,7 @@ module KwalifyToJsonSchema
   # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
   # | :custom_processing    | Object | nil          | To customize the conversion                         |
   # --
-  # @peram source Path to Kwalify YAML schema
+  # @param source Path to Kwalify YAML schema
   # @param dest Path to resulting JSON schema
   def self.convert_file(source, dest, options = {})
     # Get a converter
