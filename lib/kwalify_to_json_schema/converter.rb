@@ -18,6 +18,15 @@ module KwalifyToJsonSchema
     # Give the list of issues encontered while converting as array of strings.
     attr_reader :issues
 
+    # Options:
+    # | Name                  | Type   | Default value| Description                                         |
+    # |-----------------------|--------|--------------|-----------------------------------------------------|
+    # | :id                   | String | nil          | The JSON schema identifier                          |
+    # | :title                | String | nil          | The JSON schema title                               |
+    # | :description          | String | nil          | The JSON schema description                         |
+    # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
+    # | :custom_processing    | Object | nil          | To customize the conversion                         |
+    # --
     def initialize(options_hash = {})
       @options = Options.new(options_hash)
       @issues = []

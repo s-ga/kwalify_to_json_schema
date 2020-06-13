@@ -1,7 +1,15 @@
 module KwalifyToJsonSchema
   # The possible options for the conversion and the associated accessors
   class Options
-    # Available options
+    # Options:
+    # | Name                  | Type   | Default value| Description                                         |
+    # |-----------------------|--------|--------------|-----------------------------------------------------|
+    # | :id                   | String | nil          | The JSON schema identifier                          |
+    # | :title                | String | nil          | The JSON schema title                               |
+    # | :description          | String | nil          | The JSON schema description                         |
+    # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
+    # | :custom_processing    | Object | nil          | To customize the conversion                         |
+    # --
     DECLARATION = %q(
     ID                    # The JSON schema identifier [String] (nil)
     TITLE                 # The JSON schema title [String] (nil)

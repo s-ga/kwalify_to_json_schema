@@ -10,7 +10,7 @@ module Options
   end
 
   # @return limitation as markdown text
-  def self.markdown
+  def self.ascii_table(formatting = ["%s"] * 4)
     header = ["Name", "Type", "Default value", "Description"]
 
     nb_cols = header.length
@@ -19,10 +19,10 @@ module Options
             [[""] * nb_cols] +
             list.map { |o|
               [
-                "`#{o[:name].to_sym.inspect}`",
-                "`#{o[:type]}`",
-                "`#{o[:default_value].inspect}`",
-                "_#{o[:description]}_",
+                formatting[0] % o[:name].to_sym.inspect,
+                formatting[1] % o[:type],
+                formatting[2] % o[:default_value].inspect,
+                formatting[3] % o[:description],
               ]
             }
     nb_rows = table.length
@@ -42,7 +42,55 @@ module Options
         else
           "| " + cell + (" " * (max_length - cell.length))
         end
-      }.join
-    }.join "|\n"
+      }.join + "|"
+    }.join "\n"
+  end
+
+  def self.markdown
+    ascii_table [
+      "`%s`",
+      "`%s`",
+      "`%s`",
+      "_%s_",
+    ]
+  end
+
+  def self.inject_as_code_comment(file)
+    new_lines = []
+    state = :init
+    count = 0
+
+    options_start = "Options:"
+    options_stop = "--"
+
+    File.read(file).each_line { |line|
+      if line.strip.start_with? "#"
+        content = line.strip[1..-1].strip
+        case state
+        when :init
+          new_lines << line
+          if content == options_start
+            count += 1
+            state = :in_options
+            padding = line.index("#")
+            new_lines.concat(ascii_table.lines.map { |l| "#{" " * padding}# #{l.chomp}\n" })
+          end
+        when :in_options
+          if content.start_with? options_stop
+            new_lines << line
+            state = :init
+          end
+        end
+      else
+        state = :error unless state == :init
+        new_lines << line
+      end
+    }
+
+    if state == :error
+      puts "Missing '#{options_stop}' delimiter after '#{options_start}' in file://#{file}"
+    else
+      File.write(file, new_lines.join) if count > 0
+    end
   end
 end
