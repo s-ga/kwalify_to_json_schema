@@ -9,13 +9,30 @@ Kwalify schemas to JSON schemas conversion
 
 This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to a JSON schemas Draft 7
 
+## Installation
+
+```console
+gem install kwalify_to_json_schema
+``` 
+
 ## Limitations
 
 The current implementation has the following limitations:
 
 <%= Limitations.markdown %>
 
-## Converting a single file
+## Command line
+
+The conversion can be done using the `kwalify_to_json_schema` command.
+To get help:
+
+```console
+kwalify_to_json_schema help
+
+<%=Cli.help-%>
+```
+
+### Converting a single file
 
 The destination file extension decides if the resulting JSON schema is in JSON or YAML.
 
@@ -24,7 +41,7 @@ Source Kwalify file used as example:
 <%=example-%>
 ```
 
-### Convert to JSON format
+#### Convert to JSON format
 ```console
 kwalify_to_json_schema convert kwalify_schema.yaml json_schema.json
 ```
@@ -36,7 +53,7 @@ Will produce:
 ```
 
 
-### Convert to YAML format
+#### Convert to YAML format
 ```console
 kwalify_to_json_schema convert kwalify_schema.yaml json_schema.yaml
 ```
@@ -47,21 +64,21 @@ Will produce:
 <%=KwalifyToJsonSchema.convert_string(example, "yaml", "yaml")%>
 ```
 
-## Converting a directory
+### Converting a directory
 
-### Convert to JSON format
+#### Convert to JSON format
 
 ```console
 kwalify_to_json_schema convert_dir source_dir dest_dir --format json
 ```
 
-### Convert to YAML format
+#### Convert to YAML format
 
 ```console
 kwalify_to_json_schema convert_dir source_dir dest_dir --format yaml
 ```
 
-## Custom processing
+### Custom processing
 
 I could happen what your schema are not stored as it and may require some transformation.
 It is possible to provide a custom processing class in order to pre and post process the schemas.
@@ -120,6 +137,8 @@ my_custom_key:
 ```
 
 ## Using the API
+
+Conversion can also be done using directly the Ruby API.
 
 ```ruby
 require 'kwalify_to_json_schema'

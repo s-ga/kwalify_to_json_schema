@@ -6,15 +6,36 @@ Kwalify schemas to JSON schemas conversion
 
 This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to a JSON schemas Draft 7
 
+## Installation
+
+```console
+gem install kwalify_to_json_schema
+``` 
+
 ## Limitations
 
 The current implementation has the following limitations:
 
+* Kwalify 'date' type is not supported and is ignored
 * Kwalify 'time' type is not supported and is ignored
 * Kwalify 'timestamp' type is not supported and is ignored
-* Kwalify 'date' type is not supported and is ignored
 
-## Converting a single file
+## Command line
+
+The conversion can be done using the `kwalify_to_json_schema` command.
+To get help:
+
+```console
+kwalify_to_json_schema help
+
+Commands:
+  rake convert KWALIFY_SCHEMA_FILE, RESULT_FILE    # Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml
+  rake convert_dir KWALIFY_SCHEMA_DIR, RESULT_DIR  # Convert all the Kwalify schema from a directory to a JSON schema
+  rake help [COMMAND]                              # Describe available commands or one specific command
+
+```
+
+### Converting a single file
 
 The destination file extension decides if the resulting JSON schema is in JSON or YAML.
 
@@ -57,7 +78,7 @@ mapping:
       max-ex: 8
 ```
 
-### Convert to JSON format
+#### Convert to JSON format
 ```console
 kwalify_to_json_schema convert kwalify_schema.yaml json_schema.json
 ```
@@ -110,7 +131,7 @@ Will produce:
 ```
 
 
-### Convert to YAML format
+#### Convert to YAML format
 ```console
 kwalify_to_json_schema convert kwalify_schema.yaml json_schema.yaml
 ```
@@ -154,21 +175,21 @@ properties:
 
 ```
 
-## Converting a directory
+### Converting a directory
 
-### Convert to JSON format
+#### Convert to JSON format
 
 ```console
 kwalify_to_json_schema convert_dir source_dir dest_dir --format json
 ```
 
-### Convert to YAML format
+#### Convert to YAML format
 
 ```console
 kwalify_to_json_schema convert_dir source_dir dest_dir --format yaml
 ```
 
-## Custom processing
+### Custom processing
 
 I could happen what your schema are not stored as it and may require some transformation.
 It is possible to provide a custom processing class in order to pre and post process the schemas.
@@ -228,6 +249,8 @@ my_custom_key:
 
 ## Using the API
 
+Conversion can also be done using directly the Ruby API.
+
 ```ruby
 require 'kwalify_to_json_schema'
 
@@ -251,4 +274,4 @@ The following options are available:
 | `:title`                | `String` | `nil`        | _The JSON schema title_                               |
 | `:description`          | `String` | `nil`        | _The JSON schema description_                         |
 | `:issues_to_description`| `Boolean`| `false`      | _To append the issuses to the JSON schema description_|
-| `:custom_processing`    | `Object` | `nil`        | _To customize the conversion_                         
+| `:custom_processing`    | `Object` | `nil`        | _To customize the conversion_                         |
