@@ -10,6 +10,14 @@ module KwalifyToJsonSchema
       File.write(file, serialization_for_file(file).serialize(object))
     end
 
+    def self.deserialize_from_string(string, format = "yaml")
+      serialization_for_format(format).deserialize(string)
+    end
+
+    def self.serialize_to_string(object, format = "json")
+      serialization_for_format(format).serialize(object)
+    end
+
     # @return a Hash giving serialization/deserialization module and methods for a given file extension (.json/.yaml)
     def self.serialization_for_file(file)
       serialization_for_format(File.extname(file)[1..-1])

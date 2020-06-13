@@ -1,0 +1,35 @@
+type: map
+desc: Test 'enum', 'pattern' and 'range'
+mapping:
+  str_enum:
+    type: str
+    enum:
+      - A
+      - B
+      - C
+  str_regexp:
+    type: str
+    pattern: /^prefix_\.*/
+
+  number_range:
+    type: number
+    range:
+      min: 0
+      max: 9
+
+  number_range_ex:
+    type: number
+    range:
+      min-ex: 0
+      max-ex: 9
+
+  str_length:
+    type: str
+    length:
+      min: 4
+      max: 8
+  str_length_ex:
+    type: str
+    length:
+      min-ex: 4
+      max-ex: 8
