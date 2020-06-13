@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = "kwalify-to-json-schema"
+  s.name = "kwalify_to_json_schema"
   s.version = "0.0.0"
   s.date = "2020-06-10"
   s.summary = "Kwalify schemas to JSON schemas conversion"
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.files = Dir.glob(File.join(__dir__, "**/*.rb"))
   s.bindir = "bin"
   s.executables << "kwalify_to_json_schema"
-  s.homepage = "https://rubygems.org/gems/kwalify-to-json-schema"
+  s.homepage = "https://rubygems.org/gems/kwalify_to_json_schema"
   s.license = "MIT"
 
   s.add_runtime_dependency "thor", "~>1.0"
