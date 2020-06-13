@@ -11,7 +11,7 @@ module Options
 
   # @return limitation as markdown text
   def self.markdown
-    header = ["Name", "Constant", "Type", "Default value", "Description"]
+    header = ["Name", "Type", "Default value", "Description"]
 
     nb_cols = header.length
 
@@ -19,8 +19,7 @@ module Options
             [[""] * nb_cols] +
             list.map { |o|
               [
-                "**#{o[:name]}**",
-                "`#{o[:const_name_full]}`",
+                "`#{o[:name].to_sym.inspect}`",
                 "`#{o[:type]}`",
                 "`#{o[:default_value].inspect}`",
                 "_#{o[:description]}_",

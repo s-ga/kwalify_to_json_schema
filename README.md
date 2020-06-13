@@ -7,7 +7,7 @@ This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas
 
 ## Limitations
 
-The current implementation has the following limitation:
+The current implementation has the following limitations:
 
 * Kwalify 'timestamp' type is not supported and is ignored
 * Kwalify 'date' type is not supported and is ignored
@@ -243,10 +243,10 @@ KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.json", { id
 
 The following options are available:
 
-| Name                     | Constant                                             | Type     | Default value| Description                                           |
-|--------------------------|------------------------------------------------------|----------|--------------|-------------------------------------------------------|
-| **id**                   | `KwalifyToJsonSchema::Options::ID`                   | `String` | `nil`        | _The JSON schema identifier_                          |
-| **title**                | `KwalifyToJsonSchema::Options::TITLE`                | `String` | `nil`        | _The JSON schema title_                               |
-| **description**          | `KwalifyToJsonSchema::Options::DESCRIPTION`          | `String` | `nil`        | _The JSON schema description_                         |
-| **issues_to_description**| `KwalifyToJsonSchema::Options::ISSUES_TO_DESCRIPTION`| `Boolean`| `false`      | _To append the issuses to the JSON schema description_|
-| **custom_processing**    | `KwalifyToJsonSchema::Options::CUSTOM_PROCESSING`    | `Object` | `nil`        | _To customize the conversion_                         
+| Name                    | Type     | Default value| Description                                           |
+|-------------------------|----------|--------------|-------------------------------------------------------|
+| `:id`                   | `String` | `nil`        | _The JSON schema identifier_                          |
+| `:title`                | `String` | `nil`        | _The JSON schema title_                               |
+| `:description`          | `String` | `nil`        | _The JSON schema description_                         |
+| `:issues_to_description`| `Boolean`| `false`      | _To append the issuses to the JSON schema description_|
+| `:custom_processing`    | `Object` | `nil`        | _To customize the conversion_                         
