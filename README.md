@@ -9,9 +9,9 @@ This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas
 
 The current implementation has the following limitation:
 
-* Kwalify 'time' type is not supported and will be ignored
-* Kwalify 'timestamp' type is not supported and will be ignored
-* Kwalify 'date' type is not supported and will be ignored
+* Kwalify 'timestamp' type is not supported and is ignored
+* Kwalify 'date' type is not supported and is ignored
+* Kwalify 'time' type is not supported and is ignored
 
 ## Converting a single file
 
@@ -223,3 +223,30 @@ my_custom_key:
         - B
         - C
 ```
+
+## Using the API
+
+```ruby
+require 'kwalify_to_json_schema'
+
+# Convert to JSON format
+KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.json")
+
+# Convert to YAML format
+KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.yaml")
+
+# Specify the identifier
+KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.json", { id: "schema/example.json" })
+```
+
+### Options
+
+The following options are available:
+
+| Name                     | Constant                                             | Type     | Default value| Description                                           |
+|--------------------------|------------------------------------------------------|----------|--------------|-------------------------------------------------------|
+| **id**                   | `KwalifyToJsonSchema::Options::ID`                   | `String` | `nil`        | _The JSON schema identifier_                          |
+| **title**                | `KwalifyToJsonSchema::Options::TITLE`                | `String` | `nil`        | _The JSON schema title_                               |
+| **description**          | `KwalifyToJsonSchema::Options::DESCRIPTION`          | `String` | `nil`        | _The JSON schema description_                         |
+| **issues_to_description**| `KwalifyToJsonSchema::Options::ISSUES_TO_DESCRIPTION`| `Boolean`| `false`      | _To append the issuses to the JSON schema description_|
+| **custom_processing**    | `KwalifyToJsonSchema::Options::CUSTOM_PROCESSING`    | `Object` | `nil`        | _To customize the conversion_                         

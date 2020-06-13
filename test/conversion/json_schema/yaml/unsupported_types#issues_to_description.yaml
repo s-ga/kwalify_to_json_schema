@@ -2,9 +2,9 @@
 description: |-
   Test unsupported types.
   Issues when converting from Kwalify:
-  * 'date' type is not supported by JSON Schema
-  * 'time' type is not supported by JSON Schema
-  * 'timestamp' type is not supported by JSON Schema
+  * Kwalify 'date' type is not supported and is ignored
+  * Kwalify 'time' type is not supported and is ignored
+  * Kwalify 'timestamp' type is not supported and is ignored
 type: object
 additionalProperties: false
 properties:

@@ -39,8 +39,8 @@ module KwalifyToJsonSchema
 
     def convert(kwalify_schema_file, result_file)
       opts = {
-        issues_to_description: options[:issues_to_description],
-        custom_processing: custom_processing(options),
+        Options::ISSUES_TO_DESCRIPTION => options[:issues_to_description],
+        Options::CUSTOM_PROCESSING => custom_processing(options),
       }
       KwalifyToJsonSchema.convert_file(kwalify_schema_file, result_file, opts)
     end
@@ -73,9 +73,8 @@ module KwalifyToJsonSchema
 
     def convert_dir(kwalify_schema_dir, result_dir)
       opts = {
-        issues_to_description: options[:issues_to_description],
-        custom_processing: custom_processing(options),
-
+        Options::ISSUES_TO_DESCRIPTION => options[:issues_to_description],
+        Options::CUSTOM_PROCESSING => custom_processing(options),
       }
 
       path = [kwalify_schema_dir, options["recursive"] ? "**" : nil, "*.yaml"].compact

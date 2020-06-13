@@ -9,7 +9,7 @@ This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas
 
 The current implementation has the following limitation:
 
-<%=Limitations.markdown%>
+<%= Limitations.markdown %>
 
 ## Converting a single file
 
@@ -221,3 +221,24 @@ my_custom_key:
         - B
         - C
 ```
+
+## Using the API
+
+```ruby
+require 'kwalify_to_json_schema'
+
+# Convert to JSON format
+KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.json")
+
+# Convert to YAML format
+KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.yaml")
+
+# Specify the identifier
+KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.json", { id: "schema/example.json" })
+```
+
+### Options
+
+The following options are available:
+
+<%= Options.markdown %>
