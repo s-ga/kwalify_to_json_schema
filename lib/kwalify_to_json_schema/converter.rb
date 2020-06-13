@@ -152,7 +152,7 @@ module KwalifyToJsonSchema
         end
       end
 
-      new_issue "'unique' is not supported by JSON Schema" if kelem["unique"]
+      new_issue UNIQUE_NOT_SUPPORTED if kelem["unique"]
 
       target
     end
@@ -173,6 +173,4 @@ module KwalifyToJsonSchema
       @issues << description
     end
   end
-
-
 end
