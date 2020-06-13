@@ -1,4 +1,8 @@
 <!-- Do not update README.md but doc_template/README.md.erb and execute rake doc:update-->
+<%
+example_file = File.join(template_dir, 'kwalify_source_example.yaml')
+example = File.read example_file
+%>
 
 # kwalify-to-json-schema
 Kwalify schemas to JSON schemas conversion
@@ -17,41 +21,7 @@ The destination file extension decides if the resulting JSON schema is in JSON o
 
 Source Kwalify file used as example:
 ```yaml
-type: map
-desc: Test 'enum', 'pattern' and 'range'
-mapping:
-  str_enum:
-    type: str
-    enum:
-      - A
-      - B
-      - C
-  str_regexp:
-    type: str
-    pattern: /^prefix_\.*/
-
-  number_range:
-    type: number
-    range:
-      min: 0
-      max: 9
-
-  number_range_ex:
-    type: number
-    range:
-      min-ex: 0
-      max-ex: 9
-
-  str_length:
-    type: str
-    length:
-      min: 4
-      max: 8
-  str_length_ex:
-    type: str
-    length:
-      min-ex: 4
-      max-ex: 8
+<%=example-%>
 ```
 
 ### Convert to JSON format
@@ -62,48 +32,7 @@ kwalify_to_json_schema convert kwalify_schema.yaml json_schema.json
 Will produce:
 
 ```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "description": "Test 'enum', 'pattern' and 'range'",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "str_enum": {
-      "type": "string",
-      "enum": [
-        "A",
-        "B",
-        "C"
-      ]
-    },
-    "str_regexp": {
-      "type": "string",
-      "pattern": "^prefix_\\.*"
-    },
-    "number_range": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 9
-    },
-    "number_range_ex": {
-      "type": "number",
-      "minimum": 0,
-      "exclusiveMinimum": true,
-      "maximum": 9,
-      "exclusiveMaximum": true
-    },
-    "str_length": {
-      "type": "string",
-      "minLength": 4,
-      "maxLength": 8
-    },
-    "str_length_ex": {
-      "type": "string",
-      "minLength": 5,
-      "maxLength": 7
-    }
-  }
-}
+<%=KwalifyToJsonSchema.convert_string(example, "yaml", "json")%>
 ```
 
 
@@ -115,39 +44,7 @@ kwalify_to_json_schema convert kwalify_schema.yaml json_schema.yaml
 Will produce:
 
 ```yaml
----
-"$schema": http://json-schema.org/draft-07/schema#
-description: Test 'enum', 'pattern' and 'range'
-type: object
-additionalProperties: false
-properties:
-  str_enum:
-    type: string
-    enum:
-    - A
-    - B
-    - C
-  str_regexp:
-    type: string
-    pattern: "^prefix_\\.*"
-  number_range:
-    type: number
-    minimum: 0
-    maximum: 9
-  number_range_ex:
-    type: number
-    minimum: 0
-    exclusiveMinimum: true
-    maximum: 9
-    exclusiveMaximum: true
-  str_length:
-    type: string
-    minLength: 4
-    maxLength: 8
-  str_length_ex:
-    type: string
-    minLength: 5
-    maxLength: 7
+<%=KwalifyToJsonSchema.convert_string(example, "yaml", "yaml")%>
 ```
 
 ## Converting a directory

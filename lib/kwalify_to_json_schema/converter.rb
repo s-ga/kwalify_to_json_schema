@@ -24,9 +24,10 @@ module KwalifyToJsonSchema
     end
 
     # Execute the conversion process
-    # @param kwalify_schema Kwalify schema to be converted as Hash
+    # @param kwalify_schema Kwalify schema as Hash or YAML string to be converted as Hash
     # @return JSON schema as Hash
     def exec(kwalify_schema)
+      kwalify_schema = YAML.load(kwalify_schema) if kwalify_schema.is_a? String
       kwalify_schema = preprocess(kwalify_schema.dup)
 
       json_schema = process(root, kwalify_schema)

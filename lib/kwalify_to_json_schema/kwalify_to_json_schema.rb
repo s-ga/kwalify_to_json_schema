@@ -14,4 +14,13 @@ module KwalifyToJsonSchema
     # Serialize
     Serialization.serialize_to_file(dest, converted)
   end
+
+  def self.convert_string(kwalify_schema, source_format = "yaml", dest_format = "json", options = {})
+    # Get a converter
+    converter = Converter.new(options)
+    # Convert
+    converted = converter.exec(Serialization.deserialize_from_string(kwalify_schema, source_format))
+    # Serialize
+    Serialization.serialize_to_string(converted, dest_format)
+  end
 end

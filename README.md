@@ -1,5 +1,6 @@
 <!-- Do not update README.md but doc_template/README.md.erb and execute rake doc:update-->
 
+
 # kwalify-to-json-schema
 Kwalify schemas to JSON schemas conversion
 
@@ -9,9 +10,9 @@ This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas
 
 The current implementation has the following limitations:
 
+* Kwalify 'time' type is not supported and is ignored
 * Kwalify 'timestamp' type is not supported and is ignored
 * Kwalify 'date' type is not supported and is ignored
-* Kwalify 'time' type is not supported and is ignored
 
 ## Converting a single file
 
@@ -150,6 +151,7 @@ properties:
     type: string
     minLength: 5
     maxLength: 7
+
 ```
 
 ## Converting a directory
