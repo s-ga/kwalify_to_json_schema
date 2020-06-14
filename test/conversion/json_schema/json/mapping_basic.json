@@ -1,5 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mapping_basic",
+  "title": "Conversion of mapping_basic",
   "description": "Test a mapping with all types",
   "type": "object",
   "additionalProperties": false,
@@ -17,7 +19,14 @@
       "type": "number"
     },
     "text": {
-      "oneOf": [{ "type": "string" }, { "type": "number" }]
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
     },
     "bool": {
       "type": "boolean"

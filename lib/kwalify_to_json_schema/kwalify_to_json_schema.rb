@@ -5,13 +5,13 @@ module KwalifyToJsonSchema
   # The file extension is used to select the format: .json or .yaml.
   # Other extension will fallback to JSON.
   # Converter options:
-  # | Name                  | Type   | Default value| Description                                         |
-  # |-----------------------|--------|--------------|-----------------------------------------------------|
-  # | :id                   | String | nil          | The JSON schema identifier                          |
-  # | :title                | String | nil          | The JSON schema title                               |
-  # | :description          | String | nil          | The JSON schema description                         |
-  # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
-  # | :custom_processing    | Object | nil          | To customize the conversion                         |
+  # | Name                  | Type   | Default value| Description                                                                              |
+  # |-----------------------|--------|--------------|------------------------------------------------------------------------------------------|
+  # | :id                   | string | nil          | The JSON schema identifier                                                               |
+  # | :title                | string | nil          | The JSON schema title                                                                    |
+  # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
+  # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
+  # | :custom_processing    | object | nil          | To customize the conversion                                                              |
   # --
   # @param source Path to Kwalify YAML schema
   # @param dest Path to resulting JSON schema
@@ -28,13 +28,13 @@ module KwalifyToJsonSchema
   # The source and destination strings can be JSON or YAML.
   # Other extension will fallback to JSON.
   # Converter options:
-  # | Name                  | Type   | Default value| Description                                         |
-  # |-----------------------|--------|--------------|-----------------------------------------------------|
-  # | :id                   | String | nil          | The JSON schema identifier                          |
-  # | :title                | String | nil          | The JSON schema title                               |
-  # | :description          | String | nil          | The JSON schema description                         |
-  # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
-  # | :custom_processing    | Object | nil          | To customize the conversion                         |
+  # | Name                  | Type   | Default value| Description                                                                              |
+  # |-----------------------|--------|--------------|------------------------------------------------------------------------------------------|
+  # | :id                   | string | nil          | The JSON schema identifier                                                               |
+  # | :title                | string | nil          | The JSON schema title                                                                    |
+  # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
+  # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
+  # | :custom_processing    | object | nil          | To customize the conversion                                                              |
   # --
   # @param kwalify_schema Kwalify schema as YAML or JSON
   # @param source_format format of the source schema

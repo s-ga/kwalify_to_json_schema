@@ -25,11 +25,11 @@ module KwalifyToJsonSchema
 
     desc "convert KWALIFY_SCHEMA_FILE, RESULT_FILE",
          "Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml"
-    option :issues_to_description,
-           :type => :boolean,
-           :default => false,
-           :desc => "Will append any conversion issue to the schema description"
-    option :custom_processing,
+    option(*Options.cli_option(Options::ID))
+    option(*Options.cli_option(Options::TITLE))
+    option(*Options.cli_option(Options::DESCRIPTION))
+    option(*Options.cli_option(Options::ISSUES_TO_DESCRIPTION))
+    option Options::CUSTOM_PROCESSING,
            :type => :string,
            :desc => <<~DESC
              Allows to provide a pre/post processing file on handled schemas.
@@ -38,10 +38,8 @@ module KwalifyToJsonSchema
            DESC
 
     def convert(kwalify_schema_file, result_file)
-      opts = {
-        Options::ISSUES_TO_DESCRIPTION => options[:issues_to_description],
-        Options::CUSTOM_PROCESSING => custom_processing(options),
-      }
+      opts = options.dup
+      opts[Options::CUSTOM_PROCESSING] = custom_processing(options)
       KwalifyToJsonSchema.convert_file(kwalify_schema_file, result_file, opts)
     end
 
@@ -49,10 +47,7 @@ module KwalifyToJsonSchema
 
     desc "convert_dir KWALIFY_SCHEMA_DIR, RESULT_DIR",
          "Convert all the Kwalify schema from a directory to a JSON schema"
-    option :issues_to_description,
-           :type => :boolean,
-           :default => false,
-           :desc => "Will append any conversion issue to the schema description"
+    option(*Options.cli_option(:issues_to_description))
     option :format,
            :type => :string,
            :enum => ["json", "yaml"],
@@ -63,7 +58,7 @@ module KwalifyToJsonSchema
            :default => false,
            :desc => "Process files recursively",
            :long_desc => ""
-    option :custom_processing,
+    option Options::CUSTOM_PROCESSING,
            :type => :string,
            :desc => <<~DESC
              Allows to provide a pre/post processing file on handled schemas.
@@ -98,7 +93,7 @@ module KwalifyToJsonSchema
         begin
           processing_class = Object.const_get :CustomProcessing
           custom_processing = processing_class.new
-        rescue NameError => e
+        rescue NameError
           raise "The 'CustomProcessing' module must be defined in #{pf}"
         end
       end

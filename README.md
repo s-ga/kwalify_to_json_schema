@@ -36,6 +36,45 @@ Commands:
 
 ```
 
+Help for `convert` command:
+```console
+kwalify_to_json_schema help
+
+Usage:
+  rake convert KWALIFY_SCHEMA_FILE, RESULT_FILE
+
+Options:
+  [--id=ID]                                                # The JSON schema identifier
+  [--title=TITLE]                                          # The JSON schema title
+  [--description=DESCRIPTION]                              # The JSON schema description. If not given the Kwalify description will be used if present
+  [--issues-to-description], [--no-issues-to-description]  # To append the issuses to the JSON schema description
+  [--custom-processing=CUSTOM_PROCESSING]                  # Allows to provide a pre/post processing file on handled schemas.
+The given Ruby file have to provide the following class:
+class CustomProcessing
+    # The method will be called before conversion allowing to customize the input Kwalify schema.
+    # The implementation have to return the modified schema.
+    # The default implemention don't modify the schema.
+    # @param kwalify_schema {Hash}
+    # @return modified schema
+    def preprocess(kwalify_schema)
+      # TODO return modified schema
+    end
+    
+    # The method will be called after the conversion allowing to customize the output JSON schema.
+    # The implementation have to return the modified schema.
+    # The default implemention don't modify the schema.
+    # @param json_schema {Hash}
+    # @return modified schema
+    def postprocess(json_schema)
+      # TODO return modified schema
+    end
+end
+
+
+Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml
+```
+
+
 ### Converting a single file
 
 The destination file extension decides if the resulting JSON schema is in JSON or YAML.
@@ -269,10 +308,10 @@ KwalifyToJsonSchema.convert_file("kwalify_schema.yaml", "json_schema.json", { id
 
 The following options are available:
 
-| Name                    | Type     | Default value| Description                                           |
-|-------------------------|----------|--------------|-------------------------------------------------------|
-| `:id`                   | `String` | `nil`        | _The JSON schema identifier_                          |
-| `:title`                | `String` | `nil`        | _The JSON schema title_                               |
-| `:description`          | `String` | `nil`        | _The JSON schema description_                         |
-| `:issues_to_description`| `Boolean`| `false`      | _To append the issuses to the JSON schema description_|
-| `:custom_processing`    | `Object` | `nil`        | _To customize the conversion_                         |
+| Name                    | Type     | Default value| Description                                                                                |
+|-------------------------|----------|--------------|--------------------------------------------------------------------------------------------|
+| `:id`                   | `string` | `nil`        | _The JSON schema identifier_                                                               |
+| `:title`                | `string` | `nil`        | _The JSON schema title_                                                                    |
+| `:description`          | `string` | `nil`        | _The JSON schema description. If not given the Kwalify description will be used if present_|
+| `:issues_to_description`| `boolean`| `false`      | _To append the issuses to the JSON schema description_                                     |
+| `:custom_processing`    | `object` | `nil`        | _To customize the conversion_                                                              |

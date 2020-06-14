@@ -34,6 +34,8 @@ module KwalifyToJsonSchema
             dest = File.join(@@tmpdir, output_file)
 
             args = ["convert", source, dest]
+            args.concat ["--id", test_file_base]
+            args.concat ["--title", "Conversion of #{test_file_base}"]
             # Add issues to description if filename include "#issues_to_description"
             args << "--issues_to_description" if output_file.include?("#issues_to_description")
             args.concat cli_options

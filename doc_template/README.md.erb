@@ -1,8 +1,6 @@
 <!-- Do not update README.md but doc_template/README.md.erb and execute rake doc:update-->
-<%
-example_file = File.join(template_dir, 'kwalify_source_example.yaml')
-example = File.read example_file
-%>
+<% example_file = File.join(template_dir, "kwalify_source_example.yaml")
+   example = File.read example_file %>
 
 # kwalify_to_json_schema
 Kwalify schemas to JSON schemas conversion
@@ -29,8 +27,16 @@ To get help:
 ```console
 kwalify_to_json_schema help
 
-<%=Cli.help-%>
+<%= Cli.help -%>
 ```
+
+Help for `convert` command:
+```console
+kwalify_to_json_schema help
+
+<%= Cli.help "convert" -%>
+```
+
 
 ### Converting a single file
 
@@ -38,7 +44,7 @@ The destination file extension decides if the resulting JSON schema is in JSON o
 
 Source Kwalify file used as example:
 ```yaml
-<%=example-%>
+<%= example -%>
 ```
 
 #### Convert to JSON format
@@ -49,7 +55,7 @@ kwalify_to_json_schema convert kwalify_schema.yaml json_schema.json
 Will produce:
 
 ```json
-<%=KwalifyToJsonSchema.convert_string(example, "yaml", "json")%>
+<%= KwalifyToJsonSchema.convert_string(example, "yaml", "json") %>
 ```
 
 
@@ -61,7 +67,7 @@ kwalify_to_json_schema convert kwalify_schema.yaml json_schema.yaml
 Will produce:
 
 ```yaml
-<%=KwalifyToJsonSchema.convert_string(example, "yaml", "yaml")%>
+<%= KwalifyToJsonSchema.convert_string(example, "yaml", "yaml") %>
 ```
 
 ### Converting a directory

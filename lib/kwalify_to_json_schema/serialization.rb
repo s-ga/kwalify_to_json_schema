@@ -25,7 +25,7 @@ module KwalifyToJsonSchema
 
     # @return a Hash giving serialization/deserialization module and methods for a format (json/yaml)
     def self.serialization_for_format(format)
-      serializer = { "json" => Json, "yaml" => Yaml }[format] || Json
+      { "json" => Json, "yaml" => Yaml }[format] || Json
     end
 
     class Language

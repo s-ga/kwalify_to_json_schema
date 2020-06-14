@@ -2,20 +2,20 @@ module KwalifyToJsonSchema
   # The possible options for the conversion and the associated accessors
   class Options
     # Converter options:
-    # | Name                  | Type   | Default value| Description                                         |
-    # |-----------------------|--------|--------------|-----------------------------------------------------|
-    # | :id                   | String | nil          | The JSON schema identifier                          |
-    # | :title                | String | nil          | The JSON schema title                               |
-    # | :description          | String | nil          | The JSON schema description                         |
-    # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
-    # | :custom_processing    | Object | nil          | To customize the conversion                         |
+    # | Name                  | Type   | Default value| Description                                                                              |
+    # |-----------------------|--------|--------------|------------------------------------------------------------------------------------------|
+    # | :id                   | string | nil          | The JSON schema identifier                                                               |
+    # | :title                | string | nil          | The JSON schema title                                                                    |
+    # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
+    # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
+    # | :custom_processing    | object | nil          | To customize the conversion                                                              |
     # --
     DECLARATION = %q(
-    ID                    # The JSON schema identifier [String] (nil)
-    TITLE                 # The JSON schema title [String] (nil)
-    DESCRIPTION           # The JSON schema description [String] (nil)
-    ISSUES_TO_DESCRIPTION # To append the issuses to the JSON schema description [Boolean] (false)
-    CUSTOM_PROCESSING     # To customize the conversion [Object] (nil)
+    ID                    # The JSON schema identifier [string] (nil)
+    TITLE                 # The JSON schema title [string] (nil)
+    DESCRIPTION           # The JSON schema description. If not given the Kwalify description will be used if present [string] (nil)
+    ISSUES_TO_DESCRIPTION # To append the issuses to the JSON schema description [boolean] (false)
+    CUSTOM_PROCESSING     # To customize the conversion [object] (nil)
     )
 
     # The options as Hash
@@ -40,19 +40,24 @@ module KwalifyToJsonSchema
         default_value = eval(default_value)
 
         # Create read accessor
-        attr_reader_name = "#{name}#{type == "Boolean" ? "?" : ""}"
+        attr_reader_name = "#{name}#{type == "boolean" ? "?" : ""}"
 
         # Array entry as Hash for the option
         {
           const_name: const_name,
           const_name_full: "#{Options.name}::#{const_name}",
-          name: name,
+          name: name.to_sym,
           description: description,
           type: type,
           default_value: default_value,
           attr_reader_name: attr_reader_name,
         }
       }.compact
+    end
+
+    # Same as :parse but give a Hash with the name as key
+    def self.parse_hash
+      parse.map { |e| [e[:name], e] }.to_h
     end
 
     # Setup the constants and methods for the options
@@ -67,6 +72,12 @@ module KwalifyToJsonSchema
           options_hash[o[:name]] || o[:default_value]
         }
       }
+    end
+
+    # Get description for option name
+    def self.cli_option(name)
+      o = parse_hash[name]
+      [o[:name], :type => o[:type].to_sym, :default => o[:default_value], :desc => o[:description]]
     end
 
     setup

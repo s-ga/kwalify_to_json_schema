@@ -1,5 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sequence_basic",
+  "title": "Conversion of sequence_basic",
   "description": "Test a basic sequence",
   "type": "array",
   "items": {

@@ -19,13 +19,13 @@ module KwalifyToJsonSchema
     attr_reader :issues
 
     # Converter options:
-    # | Name                  | Type   | Default value| Description                                         |
-    # |-----------------------|--------|--------------|-----------------------------------------------------|
-    # | :id                   | String | nil          | The JSON schema identifier                          |
-    # | :title                | String | nil          | The JSON schema title                               |
-    # | :description          | String | nil          | The JSON schema description                         |
-    # | :issues_to_description| Boolean| false        | To append the issuses to the JSON schema description|
-    # | :custom_processing    | Object | nil          | To customize the conversion                         |
+    # | Name                  | Type   | Default value| Description                                                                              |
+    # |-----------------------|--------|--------------|------------------------------------------------------------------------------------------|
+    # | :id                   | string | nil          | The JSON schema identifier                                                               |
+    # | :title                | string | nil          | The JSON schema title                                                                    |
+    # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
+    # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
+    # | :custom_processing    | object | nil          | To customize the conversion                                                              |
     # --
     def initialize(options_hash = {})
       @options = Options.new(options_hash)
@@ -46,6 +46,9 @@ module KwalifyToJsonSchema
         description << issues.map { |issue| "* #{issue}" }.join("\n")
       end
 
+      # Override description if given in option
+      json_schema["description"] = options.description if options.description
+
       postprocess(json_schema)
     end
 
@@ -56,7 +59,6 @@ module KwalifyToJsonSchema
         "$schema" => SCHEMA,
         "$id" => options.id,
         "title" => options.title,
-        "description" => options.description,
       }.reject { |k, v| v.nil? }
     end
 
