@@ -1,0 +1,5 @@
+type: seq
+desc: Test unsupported unique.
+sequence:
+  - type: str
+    unique: true
