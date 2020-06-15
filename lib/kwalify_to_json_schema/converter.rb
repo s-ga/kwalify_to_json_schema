@@ -26,7 +26,7 @@ module KwalifyToJsonSchema
     # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
     # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
     # | :custom_processing    | object | nil          | To customize the conversion                                                              |
-    # | :schema_version       | String | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
+    # | :schema_version       | string | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
     # --
     def initialize(options_hash = {})
       @options = Options.new(options_hash)

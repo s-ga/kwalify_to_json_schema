@@ -1,0 +1,13 @@
+"$schema": http://json-schema.org/draft-07/schema#
+id: custom_version#draft-07
+title: Conversion of custom_version#draft-07
+description: Overriding default schema version
+type: object
+additionalProperties: false
+properties:
+  required:
+    type: string
+  not_required:
+    type: string
+required:
+  - required

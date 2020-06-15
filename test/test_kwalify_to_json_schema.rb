@@ -7,6 +7,8 @@ module KwalifyToJsonSchema
     @@debug = false
     @@tmpdir = Dir.mktmpdir
 
+    custom_version = "draft-07"
+
     [
       { test_group: "conversion", cli_options: [] },
       { test_group: "custom_processing", cli_options: ["--custom-processing", File.join(__dir__, "custom_processing.rb")] },
@@ -38,6 +40,10 @@ module KwalifyToJsonSchema
             args.concat ["--title", "Conversion of #{test_file_base}"]
             # Add issues to description if filename include "#issues_to_description"
             args << "--issues_to_description" if output_file.include?("#issues_to_description")
+            # Add schema_version include "#schema_version"
+            if output_file.include?("##{custom_version}")
+              args.concat(["--schema_version", custom_version])
+            end
             args.concat cli_options
 
             # Convert

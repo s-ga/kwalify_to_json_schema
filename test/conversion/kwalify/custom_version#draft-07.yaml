@@ -1,0 +1,9 @@
+type: map
+desc: Overriding default schema version
+mapping:
+  required:
+    type: str
+    required: true
+  not_required:
+    type: str
+    required: false
