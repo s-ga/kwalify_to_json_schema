@@ -1,5 +1,5 @@
 "$schema": http://json-schema.org/draft-04/schema#
-"$id": constraints
+"id": constraints
 title: Conversion of constraints
 description: Test 'enum', 'pattern' and 'range'
 type: object
