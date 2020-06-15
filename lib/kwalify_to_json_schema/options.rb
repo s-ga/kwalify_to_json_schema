@@ -9,6 +9,7 @@ module KwalifyToJsonSchema
     # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
     # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
     # | :custom_processing    | object | nil          | To customize the conversion                                                              |
+    # | :schema_version       | String | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
     # --
     DECLARATION = %q(
     ID                    # The JSON schema identifier [string] (nil)
@@ -16,6 +17,7 @@ module KwalifyToJsonSchema
     DESCRIPTION           # The JSON schema description. If not given the Kwalify description will be used if present [string] (nil)
     ISSUES_TO_DESCRIPTION # To append the issuses to the JSON schema description [boolean] (false)
     CUSTOM_PROCESSING     # To customize the conversion [object] (nil)
+    SCHEMA_VERSION        # JSON schema version. Changing this value only change the value of $schema field[String] ("draft-04")
     )
 
     # The options as Hash

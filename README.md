@@ -4,7 +4,7 @@
 # kwalify_to_json_schema
 Kwalify schemas to JSON schemas conversion
 
-This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to [JSON schema](https://json-schema.org/) Draft 7.
+This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to [JSON schema](https://json-schema.org/).
 
 ## Installation
 
@@ -127,7 +127,7 @@ Will produce:
 
 ```json
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Test 'enum', 'pattern' and 'range'",
   "type": "object",
   "additionalProperties": false,
@@ -180,7 +180,7 @@ Will produce:
 
 ```yaml
 ---
-"$schema": http://json-schema.org/draft-07/schema#
+"$schema": http://json-schema.org/draft-04/schema#
 description: Test 'enum', 'pattern' and 'range'
 type: object
 additionalProperties: false
@@ -274,7 +274,7 @@ kwalify_to_json_schema convert --custom_processing kwalify_to_json_schema.rb kwa
 Result will be:
 ```yaml
 my_custom_key:
-  "$schema": http://json-schema.org/draft-07/schema#
+  "$schema": http://json-schema.org/draft-04/schema#
   description: Test 'enum', 'pattern' and 'range'
   type: object
   additionalProperties: false
@@ -315,3 +315,4 @@ The following options are available:
 | `:description`          | `string` | `nil`        | _The JSON schema description. If not given the Kwalify description will be used if present_|
 | `:issues_to_description`| `boolean`| `false`      | _To append the issuses to the JSON schema description_                                     |
 | `:custom_processing`    | `object` | `nil`        | _To customize the conversion_                                                              |
+| `:schema_version`       | `String` | `"draft-04"` | _JSON schema version. Changing this value only change the value of $schema field_          |

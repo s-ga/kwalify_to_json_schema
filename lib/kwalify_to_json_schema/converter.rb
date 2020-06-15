@@ -11,7 +11,7 @@ module KwalifyToJsonSchema
   #
   # File.write("json_schema.json", JSON.pretty_generate(json_schema))
   class Converter
-    SCHEMA = "http://json-schema.org/draft-07/schema#"
+    SCHEMA = "http://json-schema.org/%s/schema#"
 
     # The options given used to initialized the converter
     attr_reader :options
@@ -26,6 +26,7 @@ module KwalifyToJsonSchema
     # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
     # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
     # | :custom_processing    | object | nil          | To customize the conversion                                                              |
+    # | :schema_version       | String | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
     # --
     def initialize(options_hash = {})
       @options = Options.new(options_hash)
@@ -56,7 +57,7 @@ module KwalifyToJsonSchema
 
     def root
       {
-        "$schema" => SCHEMA,
+        "$schema" => SCHEMA % options.schema_version,
         "$id" => options.id,
         "title" => options.title,
       }.reject { |k, v| v.nil? }

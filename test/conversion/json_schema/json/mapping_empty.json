@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "$id": "mapping_empty",
   "title": "Conversion of mapping_empty",
   "description": "Test empty mapping",

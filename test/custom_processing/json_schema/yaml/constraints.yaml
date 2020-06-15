@@ -1,5 +1,5 @@
 wrapping_name:
-  "$schema": http://json-schema.org/draft-07/schema#
+  "$schema": http://json-schema.org/draft-04/schema#
   "$id": constraints
   title: Conversion of constraints
   description: Test 'enum', 'pattern' and 'range'

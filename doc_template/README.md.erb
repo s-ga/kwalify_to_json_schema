@@ -5,7 +5,7 @@
 # kwalify_to_json_schema
 Kwalify schemas to JSON schemas conversion
 
-This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to [JSON schema](https://json-schema.org/) Draft 7.
+This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to [JSON schema](https://json-schema.org/).
 
 ## Installation
 
@@ -129,7 +129,7 @@ kwalify_to_json_schema convert --custom_processing kwalify_to_json_schema.rb kwa
 Result will be:
 ```yaml
 my_custom_key:
-  "$schema": http://json-schema.org/draft-07/schema#
+  "$schema": http://json-schema.org/draft-04/schema#
   description: Test 'enum', 'pattern' and 'range'
   type: object
   additionalProperties: false
