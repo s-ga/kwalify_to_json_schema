@@ -1,0 +1,9 @@
+"$schema": http://json-schema.org/draft-04/schema#
+id: mapping_default_value
+title: Conversion of mapping_default_value
+description: Default mapping value must be ignored
+type: object
+additionalProperties: false
+properties:
+  a:
+    type: string

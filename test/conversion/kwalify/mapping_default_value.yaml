@@ -1,0 +1,6 @@
+type: map
+desc: Default mapping value must be ignored
+mapping:
+  a:
+    type: str
+  =: "default"
