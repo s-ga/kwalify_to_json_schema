@@ -48,6 +48,8 @@ Options:
   [--title=TITLE]                                          # The JSON schema title
   [--description=DESCRIPTION]                              # The JSON schema description. If not given the Kwalify description will be used if present
   [--issues-to-description], [--no-issues-to-description]  # To append the issuses to the JSON schema description
+  [--schema-version=SCHEMA_VERSION]                        # JSON schema version. Changing this value only change the value of $schema field
+                                                           # Default: draft-04
   [--custom-processing=CUSTOM_PROCESSING]                  # Allows to provide a pre/post processing file on handled schemas.
 The given Ruby file have to provide the following class:
 class CustomProcessing
@@ -315,4 +317,4 @@ The following options are available:
 | `:description`          | `string` | `nil`        | _The JSON schema description. If not given the Kwalify description will be used if present_|
 | `:issues_to_description`| `boolean`| `false`      | _To append the issuses to the JSON schema description_                                     |
 | `:custom_processing`    | `object` | `nil`        | _To customize the conversion_                                                              |
-| `:schema_version`       | `String` | `"draft-04"` | _JSON schema version. Changing this value only change the value of $schema field_          |
+| `:schema_version`       | `string` | `"draft-04"` | _JSON schema version. Changing this value only change the value of $schema field_          |

@@ -29,6 +29,7 @@ module KwalifyToJsonSchema
     option(*Options.cli_option(Options::TITLE))
     option(*Options.cli_option(Options::DESCRIPTION))
     option(*Options.cli_option(Options::ISSUES_TO_DESCRIPTION))
+    option(*Options.cli_option(Options::SCHEMA_VERSION))
     option Options::CUSTOM_PROCESSING,
            :type => :string,
            :desc => <<~DESC
@@ -58,6 +59,7 @@ module KwalifyToJsonSchema
            :default => false,
            :desc => "Process files recursively",
            :long_desc => ""
+    option(*Options.cli_option(Options::SCHEMA_VERSION))
     option Options::CUSTOM_PROCESSING,
            :type => :string,
            :desc => <<~DESC

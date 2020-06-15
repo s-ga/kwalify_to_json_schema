@@ -12,7 +12,7 @@ module KwalifyToJsonSchema
   # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
   # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
   # | :custom_processing    | object | nil          | To customize the conversion                                                              |
-  # | :schema_version       | String | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
+  # | :schema_version       | string | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
   # --
   # @param source Path to Kwalify YAML schema
   # @param dest Path to resulting JSON schema
@@ -36,7 +36,7 @@ module KwalifyToJsonSchema
   # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
   # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
   # | :custom_processing    | object | nil          | To customize the conversion                                                              |
-  # | :schema_version       | String | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
+  # | :schema_version       | string | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
   # --
   # @param kwalify_schema Kwalify schema as YAML or JSON
   # @param source_format format of the source schema
