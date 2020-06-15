@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$id": "sequence_basic",
+  "id": "sequence_basic",
   "title": "Conversion of sequence_basic",
   "description": "Test a basic sequence",
   "type": "array",

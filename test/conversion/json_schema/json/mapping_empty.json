@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$id": "mapping_empty",
+  "id": "mapping_empty",
   "title": "Conversion of mapping_empty",
   "description": "Test empty mapping",
   "type": "object",

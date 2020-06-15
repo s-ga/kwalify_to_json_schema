@@ -58,7 +58,7 @@ module KwalifyToJsonSchema
     def root
       {
         "$schema" => SCHEMA % options.schema_version,
-        "$id" => options.id,
+        "id" => options.id,
         "title" => options.title,
       }.reject { |k, v| v.nil? }
     end

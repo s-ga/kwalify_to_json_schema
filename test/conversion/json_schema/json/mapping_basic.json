@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$id": "mapping_basic",
+  "id": "mapping_basic",
   "title": "Conversion of mapping_basic",
   "description": "Test a mapping with all types",
   "type": "object",
