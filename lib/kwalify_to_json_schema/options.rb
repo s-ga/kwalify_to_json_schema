@@ -7,8 +7,8 @@ module KwalifyToJsonSchema
     # | :id                   | string | nil          | The JSON schema identifier                                                               |
     # | :title                | string | nil          | The JSON schema title                                                                    |
     # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
-    # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
-    # | :issues_to_stderr     | boolean| false        | To write the issuses standard error output                                               |
+    # | :issues_to_description| boolean| false        | To append the issues to the JSON schema description                                      |
+    # | :issues_to_stderr     | boolean| false        | To write the issues to standard error output                                             |
     # | :custom_processing    | object | nil          | To customize the conversion                                                              |
     # | :schema_version       | string | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
     # | :verbose              | boolean| false        | To be verbose when converting                                                            |
@@ -17,8 +17,8 @@ module KwalifyToJsonSchema
     ID                    # The JSON schema identifier [string] (nil)
     TITLE                 # The JSON schema title [string] (nil)
     DESCRIPTION           # The JSON schema description. If not given the Kwalify description will be used if present [string] (nil)
-    ISSUES_TO_DESCRIPTION # To append the issuses to the JSON schema description [boolean] (false)
-    ISSUES_TO_STDERR      # To write the issuses standard error output [boolean] (false)
+    ISSUES_TO_DESCRIPTION # To append the issues to the JSON schema description [boolean] (false)
+    ISSUES_TO_STDERR      # To write the issues to standard error output [boolean] (false)
     CUSTOM_PROCESSING     # To customize the conversion [object] (nil)
     SCHEMA_VERSION        # JSON schema version. Changing this value only change the value of $schema field[string] ("draft-04")
     VERBOSE               # To be verbose when converting [boolean] (false)

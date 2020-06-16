@@ -24,8 +24,8 @@ module KwalifyToJsonSchema
     # | :id                   | string | nil          | The JSON schema identifier                                                               |
     # | :title                | string | nil          | The JSON schema title                                                                    |
     # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
-    # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
-    # | :issues_to_stderr     | boolean| false        | To write the issuses standard error output                                               |
+    # | :issues_to_description| boolean| false        | To append the issues to the JSON schema description                                      |
+    # | :issues_to_stderr     | boolean| false        | To write the issues to standard error output                                             |
     # | :custom_processing    | object | nil          | To customize the conversion                                                              |
     # | :schema_version       | string | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
     # | :verbose              | boolean| false        | To be verbose when converting                                                            |

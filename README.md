@@ -48,8 +48,8 @@ Options:
   [--id=ID]                                                # The JSON schema identifier
   [--title=TITLE]                                          # The JSON schema title
   [--description=DESCRIPTION]                              # The JSON schema description. If not given the Kwalify description will be used if present
-  [--issues-to-description], [--no-issues-to-description]  # To append the issuses to the JSON schema description
-  [--issues-to-stderr], [--no-issues-to-stderr]            # To write the issuses standard error output
+  [--issues-to-description], [--no-issues-to-description]  # To append the issues to the JSON schema description
+  [--issues-to-stderr], [--no-issues-to-stderr]            # To write the issues to standard error output
   [--schema-version=SCHEMA_VERSION]                        # JSON schema version. Changing this value only change the value of $schema field
                                                            # Default: draft-04
   [--verbose], [--no-verbose]                              # To be verbose when converting
@@ -318,8 +318,8 @@ The following options are available:
 | `:id`                   | `string` | `nil`        | _The JSON schema identifier_                                                               |
 | `:title`                | `string` | `nil`        | _The JSON schema title_                                                                    |
 | `:description`          | `string` | `nil`        | _The JSON schema description. If not given the Kwalify description will be used if present_|
-| `:issues_to_description`| `boolean`| `false`      | _To append the issuses to the JSON schema description_                                     |
-| `:issues_to_stderr`     | `boolean`| `false`      | _To write the issuses standard error output_                                               |
+| `:issues_to_description`| `boolean`| `false`      | _To append the issues to the JSON schema description_                                      |
+| `:issues_to_stderr`     | `boolean`| `false`      | _To write the issues to standard error output_                                             |
 | `:custom_processing`    | `object` | `nil`        | _To customize the conversion_                                                              |
 | `:schema_version`       | `string` | `"draft-04"` | _JSON schema version. Changing this value only change the value of $schema field_          |
 | `:verbose`              | `boolean`| `false`      | _To be verbose when converting_                                                            |
