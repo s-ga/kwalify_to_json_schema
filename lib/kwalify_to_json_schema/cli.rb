@@ -29,7 +29,9 @@ module KwalifyToJsonSchema
     option(*Options.cli_option(Options::TITLE))
     option(*Options.cli_option(Options::DESCRIPTION))
     option(*Options.cli_option(Options::ISSUES_TO_DESCRIPTION))
+    option(*Options.cli_option(Options::ISSUES_TO_STDERR))
     option(*Options.cli_option(Options::SCHEMA_VERSION))
+    option(*Options.cli_option(Options::VERBOSE))
     option Options::CUSTOM_PROCESSING,
            :type => :string,
            :desc => <<~DESC
@@ -60,6 +62,7 @@ module KwalifyToJsonSchema
            :desc => "Process files recursively",
            :long_desc => ""
     option(*Options.cli_option(Options::SCHEMA_VERSION))
+    option(*Options.cli_option(Options::VERBOSE))
     option Options::CUSTOM_PROCESSING,
            :type => :string,
            :desc => <<~DESC
@@ -69,11 +72,9 @@ module KwalifyToJsonSchema
            DESC
 
     def convert_dir(kwalify_schema_dir, result_dir)
-      opts = {
-        Options::ISSUES_TO_DESCRIPTION => options[:issues_to_description],
-        Options::CUSTOM_PROCESSING => custom_processing(options),
-      }
-
+      opts = options.dup
+      opts[Options::CUSTOM_PROCESSING] = custom_processing(options)
+      
       path = [kwalify_schema_dir, options["recursive"] ? "**" : nil, "*.yaml"].compact
       Dir.glob(File.join(*path)).each { |kwalify_schema_file|
         result_file = File.join(result_dir, File.basename(kwalify_schema_file, File.extname(kwalify_schema_file))) + ".#{options["format"]}"

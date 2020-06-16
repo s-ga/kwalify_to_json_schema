@@ -16,10 +16,11 @@ gem install kwalify_to_json_schema
 
 The current implementation has the following limitations:
 
-* Kwalify 'date' type is not supported and is ignored
 * Kwalify 'time' type is not supported and is ignored
 * Kwalify 'timestamp' type is not supported and is ignored
 * Kwalify 'unique' is not supported by JSON Schema and is ignored
+* Kwalify mapping default value is not supported by JSON Schema and is ignored
+* Kwalify 'date' type is not supported and is ignored
 
 ## Command line
 
@@ -48,8 +49,10 @@ Options:
   [--title=TITLE]                                          # The JSON schema title
   [--description=DESCRIPTION]                              # The JSON schema description. If not given the Kwalify description will be used if present
   [--issues-to-description], [--no-issues-to-description]  # To append the issuses to the JSON schema description
+  [--issues-to-stderr], [--no-issues-to-stderr]            # To write the issuses standard error output
   [--schema-version=SCHEMA_VERSION]                        # JSON schema version. Changing this value only change the value of $schema field
                                                            # Default: draft-04
+  [--verbose], [--no-verbose]                              # To be verbose when converting
   [--custom-processing=CUSTOM_PROCESSING]                  # Allows to provide a pre/post processing file on handled schemas.
 The given Ruby file have to provide the following class:
 class CustomProcessing
@@ -316,5 +319,7 @@ The following options are available:
 | `:title`                | `string` | `nil`        | _The JSON schema title_                                                                    |
 | `:description`          | `string` | `nil`        | _The JSON schema description. If not given the Kwalify description will be used if present_|
 | `:issues_to_description`| `boolean`| `false`      | _To append the issuses to the JSON schema description_                                     |
+| `:issues_to_stderr`     | `boolean`| `false`      | _To write the issuses standard error output_                                               |
 | `:custom_processing`    | `object` | `nil`        | _To customize the conversion_                                                              |
 | `:schema_version`       | `string` | `"draft-04"` | _JSON schema version. Changing this value only change the value of $schema field_          |
+| `:verbose`              | `boolean`| `false`      | _To be verbose when converting_                                                            |

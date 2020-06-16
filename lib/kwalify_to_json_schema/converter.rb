@@ -25,12 +25,15 @@ module KwalifyToJsonSchema
     # | :title                | string | nil          | The JSON schema title                                                                    |
     # | :description          | string | nil          | The JSON schema description. If not given the Kwalify description will be used if present|
     # | :issues_to_description| boolean| false        | To append the issuses to the JSON schema description                                     |
+    # | :issues_to_stderr     | boolean| false        | To write the issuses standard error output                                               |
     # | :custom_processing    | object | nil          | To customize the conversion                                                              |
     # | :schema_version       | string | "draft-04"   | JSON schema version. Changing this value only change the value of $schema field          |
+    # | :verbose              | boolean| false        | To be verbose when converting                                                            |
     # --
-    def initialize(options_hash = {})
-      @options = Options.new(options_hash)
-      @issues = []
+    # @param options {Options} or {Hash}
+    def initialize(options = {})
+      @options = Options.new(options)
+      @issues = Issues.new
     end
 
     # Execute the conversion process
@@ -44,11 +47,12 @@ module KwalifyToJsonSchema
       if issues.any? && options.issues_to_description?
         description = json_schema["description"] ||= ""
         description << "Issues when converting from Kwalify:\n"
-        description << issues.map { |issue| "* #{issue}" }.join("\n")
+        description << issues.descriptions_uniq.map { |description| "* #{description}" }.join("\n")
       end
 
       # Override description if given in option
       json_schema["description"] = options.description if options.description
+      STDERR.puts issues if options.issues_to_stderr?
 
       postprocess(json_schema)
     end
@@ -65,12 +69,14 @@ module KwalifyToJsonSchema
 
     # @param target Json schema target
     # @param kelem Kwalify element
-    def process(target, kelem)
+    def process(target, kelem, path = [])
 
       # Add description if available
       target["description"] = kelem["desc"] if kelem["desc"]
+      ktype = kelem["type"]
+      path += [ktype] if ktype
 
-      case ktype = kelem["type"]
+      case ktype
       when "map"
         target["type"] = "object"
         target["additionalProperties"] = false
@@ -79,8 +85,12 @@ module KwalifyToJsonSchema
         if mapping.is_a? Hash
           properties = target["properties"] = {}
           mapping.each_pair { |name, e|
-            next if name == "=" # Ignore mapping default value
-            process(properties[name] = {}, e)
+            # Ignore mapping default value
+            if name == "="
+              new_issue path, Limitations::MAPPING_DEFAULT_VALUE_NOT_SUPPORTED
+              next
+            end
+            process(properties[name] = {}, e, path + [name])
             required << name if e["required"] == true
           }
           target["required"] = required unless required.empty?
@@ -107,13 +117,13 @@ module KwalifyToJsonSchema
         target["type"] = "boolean"
       when "date"
         # TODO
-        new_issue Limitations::DATE_TYPE_NOT_IMPLEMENTED
+        new_issue path, Limitations::DATE_TYPE_NOT_IMPLEMENTED
       when "time"
         # TODO
-        new_issue Limitations::TIME_TYPE_NOT_IMPLEMENTED
+        new_issue path, Limitations::TIME_TYPE_NOT_IMPLEMENTED
       when "timestamp"
         # TODO
-        new_issue Limitations::TIMESTAMP_TYPE_NOT_IMPLEMENTED
+        new_issue path, Limitations::TIMESTAMP_TYPE_NOT_IMPLEMENTED
       when "scalar"
         # Use one of
         target["oneOf"] = [
@@ -156,7 +166,7 @@ module KwalifyToJsonSchema
         end
       end
 
-      new_issue Limitations::UNIQUE_NOT_SUPPORTED if kelem["unique"]
+      new_issue path, Limitations::UNIQUE_NOT_SUPPORTED if kelem["unique"]
 
       target
     end
@@ -173,8 +183,8 @@ module KwalifyToJsonSchema
       ep.postprocess(json_schema)
     end
 
-    def new_issue(description)
-      @issues << description
+    def new_issue(path, description)
+      @issues << Issue.new(path, description)
     end
   end
 end
