@@ -1,7 +1,7 @@
 <!-- Do not update README.md but doc_template/README.md.erb and execute rake doc:update-->
 
 
-# kwalify_to_json_schema
+# kwalify_to_json_schema [![Gem Version](https://badge.fury.io/rb/kwalify_to_json_schema.svg)](https://badge.fury.io/rb/kwalify_to_json_schema)
 Kwalify schemas to JSON schemas conversion
 
 This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas to [JSON schema](https://json-schema.org/).
