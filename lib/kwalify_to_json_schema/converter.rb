@@ -135,7 +135,7 @@ module KwalifyToJsonSchema
       when "any"
         # Don't put type
       else
-        new_issue("Unknown Kwalify type #{ktype}")
+        new_issue(path, "Unknown Kwalify type #{ktype}")
       end
 
       target["enum"] = kelem["enum"] if kelem["enum"]
