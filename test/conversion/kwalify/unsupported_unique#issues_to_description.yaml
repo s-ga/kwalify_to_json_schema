@@ -1,5 +1,8 @@
 type: seq
-desc: Test unsupported unique.
+desc: Test unsupported unique within a mapping.
 sequence:
-  - type: str
-    unique: true
+  - type: map
+    mapping:
+     "name":
+        type: str
+        unique: yes

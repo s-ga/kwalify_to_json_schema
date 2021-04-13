@@ -99,7 +99,13 @@ module KwalifyToJsonSchema
         target["type"] = "array"
         sequence = kelem["sequence"]
         if sequence.is_a? Array
-          process(target["items"] = {}, sequence.first)
+          rule = sequence.first
+          if rule["unique"]
+            target["uniqueItems"] = true
+            rule = rule.dup
+            rule.delete("unique")
+          end
+          process(target["items"] = {}, rule)
         end
       when "str"
         target["type"] = "string"

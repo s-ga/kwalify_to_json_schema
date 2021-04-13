@@ -3,8 +3,12 @@
 title: Conversion of unsupported_unique#issues_to_description
 
 description: |-
-  Test unsupported unique.Issues when converting from Kwalify:
-  * Kwalify 'unique' is not supported by JSON Schema and is ignored
+  Test unsupported unique within a mapping.Issues when converting from Kwalify:
+  * Kwalify 'unique' within a mapping is not supported by JSON Schema and is ignored
 type: array
 items:
-  type: string
+  type: object
+  additionalProperties: false
+  properties:
+    name:
+      type: string

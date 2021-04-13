@@ -1,0 +1,5 @@
+type: seq
+desc: Test a sequence with unique items
+sequence:
+  - type: str
+    unique: yes
