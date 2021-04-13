@@ -1,9 +1,11 @@
 "$schema": http://json-schema.org/draft-04/schema#
 id: mapping_default_value
 title: Conversion of mapping_default_value
-description: Default mapping value must be ignored
+description: Default mapping value translates to additionalProperties
 type: object
-additionalProperties: false
+additionalProperties:
+  description: rule for unknown keys
+  type: number
 properties:
   a:
     type: string

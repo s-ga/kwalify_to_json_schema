@@ -19,7 +19,6 @@ The current implementation has the following limitations:
 * Kwalify 'time' type is not supported and is ignored
 * Kwalify 'timestamp' type is not supported and is ignored
 * Kwalify 'unique' within a mapping is not supported by JSON Schema and is ignored
-* Kwalify mapping default value is not supported by JSON Schema and is ignored
 * Kwalify 'date' type is not supported and is ignored
 
 ## Command line

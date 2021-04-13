@@ -1,6 +1,8 @@
 type: map
-desc: Default mapping value must be ignored
+desc: Default mapping value translates to additionalProperties
 mapping:
   a:
     type: str
-  =: "default"
+  =:
+    desc: rule for unknown keys
+    type: number
