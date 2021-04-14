@@ -10,16 +10,17 @@ This gem allows to convert [Kwalify](http://www.kuwata-lab.com/kwalify/) schemas
 
 ```console
 gem install kwalify_to_json_schema
-```
+``` 
 
 ## Limitations
 
 The current implementation has the following limitations:
 
+* Kwalify 'date' type is not supported and is ignored
 * Kwalify 'time' type is not supported and is ignored
 * Kwalify 'timestamp' type is not supported and is ignored
 * Kwalify 'unique' within a mapping is not supported by JSON Schema and is ignored
-* Kwalify 'date' type is not supported and is ignored
+* Kwalify mapping default value is not supported by JSON Schema and is ignored
 
 ## Command line
 
@@ -63,7 +64,7 @@ class CustomProcessing
     def preprocess(kwalify_schema)
       # TODO return modified schema
     end
-
+    
     # The method will be called after the conversion allowing to customize the output JSON schema.
     # The implementation have to return the modified schema.
     # The default implemention don't modify the schema.
