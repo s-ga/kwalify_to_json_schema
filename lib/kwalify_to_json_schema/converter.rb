@@ -87,7 +87,11 @@ module KwalifyToJsonSchema
           mapping.each_pair { |name, e|
             # Ignore mapping default value
             if name == "="
-              process(target["additionalProperties"] = {}, e, path)
+              if e.is_a?(Hash)
+                process(target["additionalProperties"] = {}, e, path)
+              else
+                new_issue path, Limitations::ONLY_DEFAULT_RULE_SUPPORTED_FOR_DEFAULT_MAPPING
+              end
             else
               process(properties[name] = {}, e, path + [name])
               required << name if e["required"] == true
