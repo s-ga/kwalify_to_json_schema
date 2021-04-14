@@ -85,7 +85,8 @@ module KwalifyToJsonSchema
         if mapping.is_a? Hash
           properties = target["properties"] = {}
           mapping.each_pair { |name, e|
-            # Ignore mapping default value
+            # Handle partial support of mapping default value
+            # Only default rule is supported (see http://www.kuwata-lab.com/kwalify/ruby/users-guide.02.html#tips-default)
             if name == "="
               if e.is_a?(Hash)
                 process(target["additionalProperties"] = {}, e, path)
