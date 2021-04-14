@@ -177,7 +177,7 @@ module KwalifyToJsonSchema
         end
       end
 
-      new_issue path, Limitations::UNIQUE_NOT_SUPPORTED if kelem["unique"]
+      new_issue path, Limitations::UNIQUE_NOT_SUPPORTED_WITHIN_MAPPING if kelem["unique"]
 
       target
     end
