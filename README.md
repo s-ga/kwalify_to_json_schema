@@ -20,7 +20,7 @@ The current implementation has the following limitations:
 * Kwalify 'time' type is not supported and is ignored
 * Kwalify 'timestamp' type is not supported and is ignored
 * Kwalify 'unique' within a mapping is not supported by JSON Schema and is ignored
-* Kwalify mapping default value is not supported by JSON Schema and is ignored
+* Kwalify mapping default value is not supported by JSON Schema and is ignored. Only default rule is supported
 
 ## Command line
 
@@ -236,7 +236,7 @@ kwalify_to_json_schema convert_dir source_dir dest_dir --format yaml
 
 ### Custom processing
 
-I could happen what your schema are not stored as it and may require some transformation.
+It could happen what your schema are not stored as it and may require some transformation.
 It is possible to provide a custom processing class in order to pre and post process the schemas.
 
 Example of Kwalify schemas that needs processing:
