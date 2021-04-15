@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "sequence_unique",
+  "title": "Conversion of sequence_unique",
+  "description": "Test a sequence with unique items",
+  "type": "array",
+  "uniqueItems": true,
+  "items": {
+    "type": "string"
+  }
+}

@@ -85,13 +85,18 @@ module KwalifyToJsonSchema
         if mapping.is_a? Hash
           properties = target["properties"] = {}
           mapping.each_pair { |name, e|
-            # Ignore mapping default value
+            # Handle partial support of mapping default value
+            # Only default rule is supported (see http://www.kuwata-lab.com/kwalify/ruby/users-guide.02.html#tips-default)
             if name == "="
-              new_issue path, Limitations::MAPPING_DEFAULT_VALUE_NOT_SUPPORTED
-              next
+              if e.is_a?(Hash)
+                process(target["additionalProperties"] = {}, e, path)
+              else
+                new_issue path, Limitations::ONLY_DEFAULT_RULE_SUPPORTED_FOR_DEFAULT_MAPPING
+              end
+            else
+              process(properties[name] = {}, e, path + [name])
+              required << name if e["required"] == true
             end
-            process(properties[name] = {}, e, path + [name])
-            required << name if e["required"] == true
           }
           target["required"] = required unless required.empty?
         end
@@ -99,7 +104,13 @@ module KwalifyToJsonSchema
         target["type"] = "array"
         sequence = kelem["sequence"]
         if sequence.is_a? Array
-          process(target["items"] = {}, sequence.first)
+          rule = sequence.first
+          if rule["unique"]
+            target["uniqueItems"] = true
+            rule = rule.dup
+            rule.delete("unique")
+          end
+          process(target["items"] = {}, rule)
         end
       when "str"
         target["type"] = "string"
@@ -166,7 +177,7 @@ module KwalifyToJsonSchema
         end
       end
 
-      new_issue path, Limitations::UNIQUE_NOT_SUPPORTED if kelem["unique"]
+      new_issue path, Limitations::UNIQUE_NOT_SUPPORTED_WITHIN_MAPPING if kelem["unique"]
 
       target
     end
