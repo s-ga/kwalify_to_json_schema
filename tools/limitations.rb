@@ -7,7 +7,7 @@ module Limitations
   def self.list
     KwalifyToJsonSchema::Limitations.constants.map { |cst|
       KwalifyToJsonSchema::Limitations.const_get(cst)
-    }
+    }.sort
   end
 
   # @return limitation as markdown text
