@@ -24,7 +24,7 @@ module KwalifyToJsonSchema
     CODE
 
     desc "convert KWALIFY_SCHEMA_FILE, RESULT_FILE",
-         "Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml"
+         "Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json, .yaml or .yml"
     option(*Options.cli_option(Options::ID))
     option(*Options.cli_option(Options::TITLE))
     option(*Options.cli_option(Options::DESCRIPTION))
@@ -75,7 +75,7 @@ module KwalifyToJsonSchema
       opts = options.dup
       opts[Options::CUSTOM_PROCESSING] = custom_processing(options)
       
-      path = [kwalify_schema_dir, options["recursive"] ? "**" : nil, "*.yaml"].compact
+      path = [kwalify_schema_dir, options["recursive"] ? "**" : nil, "*.{yaml,yml}"].compact
       Dir.glob(File.join(*path)).each { |kwalify_schema_file|
         result_file = File.join(result_dir, File.basename(kwalify_schema_file, File.extname(kwalify_schema_file))) + ".#{options["format"]}"
         KwalifyToJsonSchema.convert_file(kwalify_schema_file, result_file, opts)

@@ -31,7 +31,7 @@ To get help:
 kwalify_to_json_schema help
 
 Commands:
-  rake convert KWALIFY_SCHEMA_FILE, RESULT_FILE    # Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml
+  rake convert KWALIFY_SCHEMA_FILE, RESULT_FILE    # Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json, .yaml or .yml
   rake convert_dir KWALIFY_SCHEMA_DIR, RESULT_DIR  # Convert all the Kwalify schema from a directory to a JSON schema
   rake help [COMMAND]                              # Describe available commands or one specific command
 
@@ -76,7 +76,7 @@ class CustomProcessing
 end
 
 
-Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json or .yaml
+Convert a Kwalify schema file to a JSON schema file. The result file extension will decide the format: .json, .yaml or .yml
 ```
 
 

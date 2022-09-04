@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = "kwalify_to_json_schema"
-  s.version = "0.6.0"
-  s.date = "2021-04-15"
+  s.version = "0.6.1"
+  s.date = "2022-09-04"
   s.summary = "Kwalify schemas to JSON schemas conversion"
   s.description = "Allows to convert Kwalify schemas to JSON schemas"
   s.authors = ["Sylvain Gamot"]

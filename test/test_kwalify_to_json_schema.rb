@@ -17,7 +17,7 @@ module KwalifyToJsonSchema
       cli_options = entry[:cli_options]
 
       # Create a test method for every Kwalify schema
-      Dir.glob(File.join(__dir__, test_group, "kwalify", "*.yaml")).each { |source|
+      Dir.glob(File.join(__dir__, test_group, "kwalify", "*.{yaml,yml}")).each { |source|
         test_file_base = File.basename(source, File.extname(source))
         test_name_base = test_file_base.gsub("#", "_")
         expected_formats = %w(json yaml)
@@ -64,7 +64,7 @@ module KwalifyToJsonSchema
             )
           }
 
-          skip "None of the expected #{expected_formats.join(", ")} result for test #{test_name_base} was found" if formats_done == 0
+          raise "None of the expected #{expected_formats.join(", ")} result for test #{test_name_base} was found" if formats_done == 0
         }
       }
     }
